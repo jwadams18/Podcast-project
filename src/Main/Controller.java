@@ -62,7 +62,7 @@ public class Controller implements Initializable {
     private Button searchBtn;
 
     @FXML
-    private Label nowPlayingBtn;
+    private Label nowPlayingLabel;
 
     @FXML
     private Button addBtn;
