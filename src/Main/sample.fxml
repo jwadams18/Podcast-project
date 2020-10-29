@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -40,7 +41,7 @@
                                           <Insets />
                                        </GridPane.margin>
                                     </AnchorPane>
-                                    <ListView fx:id="queue" prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                                    <ListView fx:id="queueView" prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
                                  </children>
                               </GridPane>
                            </children>
@@ -61,12 +62,33 @@
                                  <children>
                                     <AnchorPane GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <children>
-                                          <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="172.0" progress="0.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <ProgressBar fx:id="progressBar" prefHeight="9.0" prefWidth="172.0" progress="0.05" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
-                                    <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtn" text="Button" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                                    <Button fx:id="toggleBtn" alignment="CENTER" mnemonicParsing="false" onAction="#toggleBtn" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                                    <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#skipBtn" text="Button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                                    <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtn" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../resources/rewindIcon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
+                                    <Button fx:id="toggleBtn" alignment="CENTER" mnemonicParsing="false" onAction="#toggleBtn" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                       <graphic>
+                                          <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true">
+                                             <image>
+                                                <Image url="@../../resources/playIcon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
+                                    <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#skipBtn" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../resources/fastforwardIcon.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></Button>
                                     <ImageView fx:id="podcastCover" fitHeight="121.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" />
                                  </children>
                               </GridPane>
@@ -84,7 +106,7 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" percentHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -94,7 +116,7 @@
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets></Button>
-                              <Label fx:id="nowPlayingBtn" alignment="CENTER" layoutX="67.0" layoutY="11.0" prefHeight="33.0" prefWidth="295.0" text="safoadshgodshgouhsdoghsdfuoghfsdujghufdshg" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="6.0" />
+                              <Label fx:id="nowPlayingBtn" alignment="CENTER" layoutX="67.0" layoutY="11.0" prefHeight="33.0" prefWidth="295.0" text="Now playing: Nothing" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="6.0" />
                               <Button fx:id="addBtn" layoutX="362.0" layoutY="1.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="33.0" prefWidth="55.0" text="Add" AnchorPane.rightAnchor="0.0" />
                            </children>
                            <padding>
@@ -106,7 +128,7 @@
                               <Label fx:id="noteTitle" alignment="CENTER" prefHeight="36.0" prefWidth="417.0" text="Label" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
-                        <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                        <TextArea fx:id="noteArea" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin></TextArea>
