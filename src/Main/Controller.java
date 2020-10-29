@@ -148,7 +148,7 @@ public class Controller implements Initializable {
         catch (IOException e) {
             e.printStackTrace();
         }
-        String rssFeed = m.getTest().getRssFeed();
+        String rssFeed = m.getSecondaryController().getRssFeed();
         System.out.println("The link entered in the secondary window was: "+rssFeed);
     }
 
