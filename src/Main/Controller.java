@@ -139,8 +139,9 @@ public class Controller implements Initializable {
         try {
             root = FXMLLoader.load(new File("src/Main/addWindow.fxml").toURL());
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
-            stage.setScene(new Scene(root, 450, 450));
+            stage.setTitle("Add new feed");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.showAndWait();
             // Hide this current window (if this is what you want)
 //            ((Node)(event.getSource())).getScene().getWindow().hide();
