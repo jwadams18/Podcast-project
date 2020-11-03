@@ -67,7 +67,7 @@
                                     </AnchorPane>
                                     <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtn" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>
-                                          <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="rewindBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../../resources/rewindIcon.png" />
                                              </image>
@@ -75,7 +75,7 @@
                                        </graphic></Button>
                                     <Button fx:id="toggleBtn" alignment="CENTER" mnemonicParsing="false" onAction="#toggleBtn" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>
-                                          <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true">
+                                          <ImageView fx:id="toggleBtnIcon" fitHeight="37.0" fitWidth="37.0" pickOnBounds="true">
                                              <image>
                                                 <Image url="@../../resources/playIcon.png" />
                                              </image>
@@ -83,7 +83,7 @@
                                        </graphic></Button>
                                     <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#skipBtn" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>
-                                          <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="forwardBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../../resources/fastforwardIcon.png" />
                                              </image>
