@@ -22,7 +22,7 @@
       <CheckBox fx:id="subscribed" layoutX="31.0" layoutY="166.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="185.0" text="Subscribe to RSS Feed" />
       <ImageView fitHeight="70.0" fitWidth="85.0" layoutX="31.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../resources/rssFeedIcon.png" />
+            <Image url="@resources/rssFeedIcon.png" />
          </image>
       </ImageView>
       <Label layoutX="112.0" layoutY="33.0" prefHeight="74.0" prefWidth="241.0" text="Enter RSS feed link" textAlignment="CENTER">
