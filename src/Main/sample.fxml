@@ -16,7 +16,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller">
    <children>
-      <SplitPane dividerPositions="0.29797979797979796" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.33" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                <children>
@@ -69,7 +69,7 @@
                                        <graphic>
                                           <ImageView fx:id="rewindBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../resources/rewindIcon.png" />
+                                                <Image url="@resources/rewindIcon.png" />
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
@@ -77,7 +77,7 @@
                                        <graphic>
                                           <ImageView fx:id="toggleBtnIcon" fitHeight="37.0" fitWidth="37.0" pickOnBounds="true">
                                              <image>
-                                                <Image url="@../../resources/playIcon.png" />
+                                                <Image url="@resources/playIcon.png" />
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
@@ -85,11 +85,14 @@
                                        <graphic>
                                           <ImageView fx:id="forwardBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../resources/fastforwardIcon.png" />
+                                                <Image url="@resources/fastforwardIcon.png" />
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
-                                    <ImageView fx:id="podcastCover" fitHeight="121.0" fitWidth="172.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" />
+                                    <ImageView fx:id="podcastCover" fitHeight="109.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+                                       <image>
+                                          <Image url="@resources/rssFeedIcon.png" />
+                                       </image></ImageView>
                                  </children>
                               </GridPane>
                            </children>
@@ -112,11 +115,11 @@
                      <children>
                         <AnchorPane prefHeight="21.0" prefWidth="417.0">
                            <children>
-                              <Button fx:id="searchBtn" alignment="CENTER" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchBtn" prefHeight="33.0" prefWidth="55.0" text="Search">
+                              <Button fx:id="searchBtn" alignment="CENTER" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchBtn" prefHeight="33.0" prefWidth="55.0" text="Library">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets></Button>
-                              <Label fx:id="nowPlayingLabel" alignment="CENTER" layoutX="67.0" layoutY="11.0" prefHeight="33.0" prefWidth="295.0" text="Now playing" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="6.0" />
+                              <Label fx:id="nowPlayingLabel" alignment="CENTER" layoutX="67.0" layoutY="11.0" prefHeight="33.0" prefWidth="295.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="6.0" />
                               <Button fx:id="addBtn" layoutX="362.0" layoutY="1.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="33.0" prefWidth="55.0" text="Add" AnchorPane.rightAnchor="0.0" />
                            </children>
                            <padding>
