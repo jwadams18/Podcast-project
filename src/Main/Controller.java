@@ -18,8 +18,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -114,6 +117,7 @@ public class Controller implements Initializable {
                     noteTitle.setText(selectedPodcast.getTitle()+" notes");
                     //TODO need to make listener to auto-save the text for the notes
                     noteArea.setText(selectedPodcast.getNoteArea().getText());
+//                    podcastCover.setImage(new Image(getClass().getResource("podcast.jpg").toExternalForm()));
                 }));
 
         queueView.getSelectionModel().selectFirst();
@@ -150,12 +154,15 @@ public class Controller implements Initializable {
 
     public void toggleBtn(ActionEvent event){
         //TODO find why icons aren't loading
-        Image img = null;
-
+        //TODO make sure when a podcast is playing it is stopped before playing another one
+        javafx.scene.image.Image img = null;
         if(isPlaying) {
-            img = new Image("file:/resources/playIcon.png");
+
+//            img= new Image(getClass().getResource("playIcon.png").toExternalForm());
+            nowPlayingLabel.setText("");
         } else {
-            img = new Image("file:/resources/pause.png");
+//            img = new Image(getClass().getResource("pause.png").toExternalForm());
+            nowPlayingLabel.setText("Now playing: "+selectedPodcast.getTitle());
         }
         isPlaying = !isPlaying;
         toggleBtnIcon.setImage(img);
