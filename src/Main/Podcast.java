@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
 
 import javax.swing.*;
+import java.util.Random;
 
 public class Podcast {
 
@@ -14,12 +15,13 @@ public class Podcast {
     private int episode, season, progress;
     private JTextArea noteArea;
     private String imgPath;
-    private boolean isPlaying;
+    private boolean isPlaying, hasNotes;
 
     public Podcast(){
 
         this.progress = 0;
         this.isPlaying = false;
+        this.hasNotes = false;
 
     }
 
@@ -31,12 +33,17 @@ public class Podcast {
         this.episode = episode;
         this.noteArea = noteArea;
         this.imgPath = imgPath;
-        this.progress = 0;
+        this.progress = new Random().nextInt(101);
         this.isPlaying = false;
+        this.hasNotes = false;
 
     }
 
 
+    @Override
+    public String toString(){
+        return "[S"+this.season+":"+this.episode+"] "+this.title.get();
+    }
 
     public String getAuthor() {
         return author.get();
@@ -100,6 +107,10 @@ public class Podcast {
 
     public void setPlaying(boolean playing) {
         isPlaying = playing;
+    }
+
+    public boolean hasNotes(){
+        return noteArea.getText().isBlank();
     }
 
     public static Callback<Podcast, Observable[]> extractor = p -> new Observable[]
