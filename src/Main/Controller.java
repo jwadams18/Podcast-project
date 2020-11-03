@@ -10,6 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -86,7 +89,7 @@ public class Controller implements Initializable {
          * if "fx:controller" is not set in fxml
          * fxmlLoader.setController(NewWindowController);
          */
-
+        queueView.setCellFactory(new PodcastCellFactory());
         queueView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         Model.fillSampleData(queueList);
@@ -104,7 +107,7 @@ public class Controller implements Initializable {
 
         queueView.getSelectionModel().selectedItemProperty().addListener(
                 podcastChangeListener = ((observableValue, oldValues, newValue) -> {
-                    System.out.println("Selected item: "+newValue);
+                    System.out.println("Selected item: "+newValue+" current progress "+newValue.getProgress());
                     selectedPodcast = newValue;
 
                     //TODO set properties here
@@ -112,28 +115,16 @@ public class Controller implements Initializable {
                     //TODO need to make listener to auto-save the text for the notes
                     noteArea.setText(selectedPodcast.getNoteArea().getText());
                 }));
+
+        queueView.getSelectionModel().selectFirst();
     }
 
-    public void foo(ActionEvent actionEvent) {
-//        Stream<Item> rssFeed = null;
-//        try {
-//            rssFeed = m.read("http://podcasts.joerogan.net/feed");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        List<Item> info = rssFeed.collect(Collectors.toList());
-//        for(Item itm : info){
-//            System.out.println(itm.getLink());
-//        }
-//
-//        hiLabel.setText("Loaded "+info.size()+" podcast from {link}");
-    }
 
     public void searchBtn(ActionEvent event){
         System.out.println("This is the search btn");
     }
 
-    public void addBtn(ActionEvent event){
+    public void addBtn(ActionEvent event) {
         System.out.println("This is the add btn");
         Parent root;
         try {
@@ -159,11 +150,12 @@ public class Controller implements Initializable {
 
     public void toggleBtn(ActionEvent event){
         //TODO find why icons aren't loading
-        Image img;
-        if(isPlaying){
-            img = new Image("resources/playIcon.png");
+        Image img = null;
+
+        if(isPlaying) {
+            img = new Image("file:/resources/playIcon.png");
         } else {
-            img = new Image("resources/pause.png");
+            img = new Image("file:/resources/pause.png");
         }
         isPlaying = !isPlaying;
         toggleBtnIcon.setImage(img);
