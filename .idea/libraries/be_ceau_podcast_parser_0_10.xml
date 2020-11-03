@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="be.ceau:podcast-parser:0.10" type="repository">
+    <properties maven-id="be.ceau:podcast-parser:0.10" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/be/ceau/podcast-parser/0.10/podcast-parser-0.10.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/be/ceau/podcast-parser/0.10/podcast-parser-0.10-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
