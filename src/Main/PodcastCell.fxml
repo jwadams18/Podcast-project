@@ -11,14 +11,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<fx:root prefHeight="40.0" prefWidth="204.0" type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<javafx.scene.control.ListCell prefHeight="40.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
       <HBox fx:id="container" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="206.0">
          <children>
-            <ImageView fx:id="hasNotes" fitHeight="32.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="isPlaying" disable="true" fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../resources/speaker.png" />
-               </image></ImageView>
+                  <Image url="@resources/speaker.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin></ImageView>
             <GridPane prefHeight="49.0" prefWidth="100.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
@@ -44,9 +47,9 @@
                   <Insets left="5.0" />
                </opaqueInsets>
             </GridPane>
-            <ImageView fitHeight="34.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="hasNotes" disable="true" fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../resources/notes.png" />
+                  <Image url="@resources/notes.png" />
                </image>
                <HBox.margin>
                   <Insets left="40.0" />
@@ -55,4 +58,4 @@
          </children>
       </HBox>
    </graphic>
-</fx:root>
+</javafx.scene.control.ListCell>
