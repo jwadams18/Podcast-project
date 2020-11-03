@@ -1,7 +1,4 @@
 package Main;
-
-import com.apptastic.rssreader.Item;
-import com.apptastic.rssreader.RssReader;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 
