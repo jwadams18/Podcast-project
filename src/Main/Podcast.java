@@ -33,9 +33,9 @@ public class Podcast {
         this.episode = episode;
         this.noteArea = noteArea;
         this.imgPath = imgPath;
-        this.progress = new Random().nextInt(101);
+        this.progress = 50;
         this.isPlaying = false;
-        this.hasNotes = false;
+        this.hasNotes = true;
 
     }
 
@@ -78,7 +78,7 @@ public class Podcast {
     }
 
     public int getProgress() {
-        return progress;
+        return this.progress;
     }
 
     public void setProgress(int progress) {
