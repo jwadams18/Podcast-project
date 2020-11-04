@@ -14,15 +14,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,6 +27,9 @@ public class Controller implements Initializable {
     private Model m = Main.model;
     private boolean isPlaying;
 
+    /**
+     * Used to store data for listView that represents the queue
+     */
     private final ObservableList<Podcast> queueList = FXCollections.observableArrayList(Podcast.extractor);
     private ChangeListener<Podcast> podcastChangeListener;
     private Podcast selectedPodcast;
@@ -72,7 +70,7 @@ public class Controller implements Initializable {
 
     @FXML
     private Button addBtn;
-    //TODO need to set some default value, possibly first in list
+
     @FXML
     private Label noteTitle;
 
@@ -85,17 +83,18 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //Loads the fxml files for sample scene
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("sample.fxml"));
         m.setMainController(fxmlLoader);
-        /*
-         * if "fx:controller" is not set in fxml
-         * fxmlLoader.setController(NewWindowController);
-         */
+
+        //Sets the "factory" that will make each new listView cell, set selection to single
         queueView.setCellFactory(new PodcastCellFactory());
         queueView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
+        //Fills will sample data from Model, will be replaced when back-end loading is finished
         Model.fillSampleData(queueList);
+        //Sorts list based on comparator defined below
         SortedList<Podcast> sortedList = new SortedList<>(queueList);
 
         sortedList.setComparator((Podcast1, Podcast2) -> {
@@ -106,8 +105,10 @@ public class Controller implements Initializable {
             }
             return result;
         });
+        //Data is put into listView
         queueView.setItems(sortedList);
 
+        //Listener that will update info (notes, title, podcast cover)
         queueView.getSelectionModel().selectedItemProperty().addListener(
                 podcastChangeListener = ((observableValue, oldValues, newValue) -> {
                     System.out.println("Selected item: "+newValue+" current progress "+newValue.getProgress());
@@ -119,7 +120,7 @@ public class Controller implements Initializable {
                     noteArea.setText(selectedPodcast.getNoteArea().getText());
 //                    podcastCover.setImage(new Image(getClass().getResource("podcast.jpg").toExternalForm()));
                 }));
-
+        //Set default selection to first
         queueView.getSelectionModel().selectFirst();
     }
 
@@ -129,9 +130,9 @@ public class Controller implements Initializable {
     }
 
     public void addBtn(ActionEvent event) {
-        System.out.println("This is the add btn");
         Parent root;
         try {
+            //Loads pop-up window using addWindow.fxml
             root = FXMLLoader.load(new File("src/Main/addWindow.fxml").toURL());
             Stage stage = new Stage();
             stage.setTitle("Add new feed");
@@ -144,6 +145,7 @@ public class Controller implements Initializable {
         catch (IOException e) {
             e.printStackTrace();
         }
+        //Connected to the model to get the controller of the add window to get the string entered as the "rssfeed"
         String rssFeed = m.getSecondaryController().getRssFeed();
         System.out.println("The link entered in the secondary window was: "+rssFeed);
     }
