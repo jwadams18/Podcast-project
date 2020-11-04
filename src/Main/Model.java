@@ -3,9 +3,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.stream.Stream;
 
 public class Model {
 
