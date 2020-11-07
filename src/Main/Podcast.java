@@ -25,12 +25,10 @@ public class Podcast {
 
     }
 
-    public Podcast(String Title, String Author, int season, int episode, JTextArea noteArea, String imgPath){
+    public Podcast(String Title, String Author, JTextArea noteArea, String imgPath){
 
         this.title.set(Title);
         this.author.set(Author);
-        this.season = season;
-        this.episode = episode;
         this.noteArea = noteArea;
         this.imgPath = imgPath;
         this.progress = 50;
@@ -59,22 +57,6 @@ public class Podcast {
 
     public void setTitle(String title) {
         this.title.set(title);
-    }
-
-    public int getEpisode() {
-        return episode;
-    }
-
-    public void setEpisode(int episode) {
-        this.episode = episode;
-    }
-
-    public int getSeason() {
-        return season;
-    }
-
-    public void setSeason(int season) {
-        this.season = season;
     }
 
     public int getProgress() {
