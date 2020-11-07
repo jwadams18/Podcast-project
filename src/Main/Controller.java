@@ -16,8 +16,19 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -148,6 +159,12 @@ public class Controller implements Initializable {
         //Connected to the model to get the controller of the add window to get the string entered as the "rssfeed"
         String rssFeed = m.getSecondaryController().getRssFeed();
         System.out.println("The link entered in the secondary window was: "+rssFeed);
+
+        //Will be null if addWindow is closed or cancelled
+        if(!rssFeed.isBlank()){
+            buildPodcast(rssFeed, m.getSecondaryController().getPodcastCount());
+        }
+
     }
 
     public void skipBtn(ActionEvent event){
@@ -175,4 +192,12 @@ public class Controller implements Initializable {
     public void backBtn(ActionEvent event){
         System.out.println("This is the back btn");
     }
+
+    public Podcast buildPodcast(String urlEntry, int numToLoad){
+
+
+        return null;
+    }
+
+
 }
