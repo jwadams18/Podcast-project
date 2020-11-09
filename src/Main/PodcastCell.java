@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class PodcastCell extends ListCell<Podcast>{
     private Model model = Main.model;
 
     @FXML
-    private HBox container;
+    private AnchorPane container;
 
     @FXML
     private ImageView hasNotes;
@@ -50,9 +51,6 @@ public class PodcastCell extends ListCell<Podcast>{
     protected void updateItem(Podcast podcast, boolean empty) {
         super.updateItem(podcast, empty);
 
-//        isPlaying.setVisible(false);
-//        hasNotes.setVisible(false);
-
         if(empty || podcast == null) {
             podcastTitle.setVisible(false);
             podcastProgress.setVisible(false);
@@ -66,12 +64,18 @@ public class PodcastCell extends ListCell<Podcast>{
             podcastProgress.setProgress(podcast.getProgress());
             podcastProgress.setVisible(true);
 
+            System.out.println(getClass().getName()+" "+podcast.hasNotes());
+            System.out.println(getClass().getName()+" "+podcast.isPlaying());
+
             if(podcast.hasNotes()){
-                System.out.println("Is this running?");
                 hasNotes.setVisible(true);
+            } else {
+                hasNotes.setVisible(false);
             }
             if(podcast.isPlaying()){
                 isPlaying.setVisible(true);
+            } else {
+                isPlaying.setVisible(false);
             }
 
             setGraphic(container);

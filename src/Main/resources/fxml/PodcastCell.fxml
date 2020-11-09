@@ -6,56 +6,29 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <javafx.scene.control.ListCell prefHeight="40.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
-      <HBox fx:id="container" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="206.0">
+      <AnchorPane fx:id="container" prefHeight="44.0" prefWidth="190.0">
          <children>
-            <ImageView fx:id="isPlaying" disable="true" fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="isPlaying" disable="true" fitHeight="23.0" fitWidth="20.0" layoutX="145.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="29.0">
                <image>
                   <Image url="@../speaker.png" />
                </image>
-               <HBox.margin>
-                  <Insets right="15.0" />
-               </HBox.margin></ImageView>
-            <GridPane prefHeight="49.0" prefWidth="100.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ProgressBar fx:id="podcastProgress" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="120.0" progress="0.0" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="5.0" />
-                     </GridPane.margin></ProgressBar>
-                  <Label fx:id="podcastTitle" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="120.0" text="Label">
-                     <opaqueInsets>
-                        <Insets left="10.0" />
-                     </opaqueInsets>
-                     <GridPane.margin>
-                        <Insets left="5.0" />
-                     </GridPane.margin></Label>
-               </children>
+            </ImageView>
+            <Label fx:id="podcastTitle" layoutX="5.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="134.0" text="Label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="55.0">
                <opaqueInsets>
-                  <Insets left="5.0" />
+                  <Insets left="10.0" />
                </opaqueInsets>
-            </GridPane>
-            <ImageView fx:id="hasNotes" disable="true" fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+            </Label>
+            <ImageView fx:id="hasNotes" disable="true" fitHeight="28.0" fitWidth="28.0" layoutX="166.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
                <image>
                   <Image url="@../notes.png" />
                </image>
-               <HBox.margin>
-                  <Insets left="40.0" />
-               </HBox.margin>
             </ImageView>
+            <ProgressBar fx:id="podcastProgress" layoutX="42.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="100.0" progress="0.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
-      </HBox>
+      </AnchorPane>
    </graphic>
 </javafx.scene.control.ListCell>
