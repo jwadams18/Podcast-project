@@ -36,14 +36,6 @@ public class Model {
     private ObservableList<Podcast> podcastList = FXCollections.observableArrayList(Podcast.extractor);
     private ObservableList<Podcast> queueList = FXCollections.observableArrayList(Podcast.extractor);
 
-    public static void fillSampleData(ObservableList<Podcast> backingList) {
-//        backingList.add(new Podcast("Name 1", "Author 1", new JTextArea("Welcome to the new season!"), "resources/playIcon.png"));
-//        backingList.add(new Podcast("Name 2", "Author 2",  new JTextArea("Episode one was much better!"), "resources/playIcon.png"));
-//        backingList.add(new Podcast("Name 3", "Author 3",  new JTextArea("When is the new season coming out?"), "resources/playIcon.png"));
-//        backingList.add(new Podcast("Name 4", "Author 4",  new JTextArea("LAST EPISODE!"), "resources/playIcon.png"));
-//        backingList.add(new Podcast("Name 5", "Author 5", new JTextArea("SEASON 2!!"), "resources/playIcon.png"));
-    }
-
     public boolean loadData(String urlEntry){
 
         boolean validLink = true;
@@ -54,6 +46,7 @@ public class Model {
         NodeList imgList = null;
         NodeList enclosureList = null;
         NodeList durationList = null;
+        NodeList pubDateList = null;
 
         try {
             URL url = new URL(urlEntry);
@@ -68,31 +61,37 @@ public class Model {
             Document document = builder.parse(input);
             document.getDocumentElement().normalize();
 
-            Node startingPoint = document.getFirstChild();
+            //TODO START UNUSED CODE, SOON TO BE DELETED
+//            Node startingPoint = document.getFirstChild();
 //            System.out.println(startingPoint.getTextContent());
 //            while(startingPoint.getNextSibling() != null){
 //                System.out.println(startingPoint.getNodeName());
 //                startingPoint.getNextSibling();
 //            }
-            NodeList test = document.getElementsByTagName("item");
-            System.out.println(test.getLength());
+//            NodeList test = document.getElementsByTagName("item");
+//            System.out.println(test.getLength());
 //            for(int i = 0; i<test.getLength(); i++){
 //                System.out.println(test.item(i).getChildNodes().item(0).getTextContent());
 //            }
+            //END UNUSED CODE
 
+
+            //Gets all the data from rss feed
             titleList = document.getElementsByTagName("title");
             authorList = document.getElementsByTagName("itunes:author");
             imgList = document.getElementsByTagName("itunes:image");
             enclosureList = document.getElementsByTagName("enclosure");
             durationList = document.getElementsByTagName("itunes:duration");
+            pubDateList = document.getElementsByTagName("pubDate");
 
+            //Stores all data in a hashmap
             mostRecentPodcast = titleList.item(0).getTextContent();
             mostRecentRSSData.put("title", titleList);
             mostRecentRSSData.put("author", authorList);
             mostRecentRSSData.put("image", imgList);
             mostRecentRSSData.put("enclosure", enclosureList);
             mostRecentRSSData.put("duration", durationList);
-
+            mostRecentRSSData.put("pubDate", pubDateList);
 
             input.close();
 
