@@ -7,7 +7,6 @@ import javafx.util.Callback;
 import org.w3c.dom.Node;
 
 import javax.swing.*;
-import java.util.Random;
 
 public class Podcast {
 
@@ -15,7 +14,7 @@ public class Podcast {
     private final StringProperty title = new SimpleStringProperty(this, "title", "");
     private int  progress, maxProgress;
     private JTextArea noteArea;
-    private String imgPath, enclosurePath;
+    private String imgPath, enclosurePath, duration;
     private boolean isPlaying, hasNotes;
 
     public Podcast(){
@@ -26,12 +25,13 @@ public class Podcast {
 
     }
 
-    public Podcast(String Title, String Author, String imgPath, Node enclosure){
+    public Podcast(String Title, String Author, String imgPath, Node enclosure, String duration){
 
         this.title.set(Title);
         this.author.set(Author);
         this.noteArea = new JTextArea();
         this.noteArea.setText("Write your first note here!");
+        this.duration = duration;
 
         this.imgPath = imgPath;
         this.progress = 50;
@@ -53,16 +53,8 @@ public class Podcast {
         return author.get();
     }
 
-    public void setAuthor(String author) {
-        this.author.set(author);
-    }
-
     public String getTitle() {
         return title.get();
-    }
-
-    public void setTitle(String title) {
-        this.title.set(title);
     }
 
     public int getProgress() {
@@ -77,17 +69,11 @@ public class Podcast {
         return noteArea;
     }
 
-    public void setNoteArea(JTextArea noteArea) {
-        this.noteArea = noteArea;
-    }
-
     public String getImgPath() {
         return imgPath;
     }
 
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
-    }
+    public String getDuration() { return this.duration;}
 
     public boolean isPlaying() {
         return isPlaying;

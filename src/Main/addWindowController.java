@@ -114,7 +114,8 @@ public class addWindowController implements Initializable {
         NodeList titleList = rssData.get("title");
         NodeList authorList = rssData.get("author");
         NodeList imgList = rssData.get("image");
-        NodeList enclosureList = rssData.get("enclosures");
+        NodeList enclosureList = rssData.get("enclosure");
+        NodeList durationList = rssData.get("duration");
 
         System.out.println("addWindowController: building "+numToLoad+" podcast");
         for(int i = 0; i<numToLoad; i++){
@@ -122,9 +123,10 @@ public class addWindowController implements Initializable {
             System.out.println("Titles: "+titleList.getLength());
             System.out.println("Authors: "+authorList.getLength());
             System.out.println("Images: "+imgList.getLength());
+            System.out.println("Durations: "+durationList.getLength());
 
             Podcast temp = new Podcast(titleList.item(i+1).getTextContent(),authorList.item(i).getTextContent()
-                    , imgList.item(0).getAttributes().getNamedItem("href").getTextContent(), enclosureList.item(i));
+                    , imgList.item(0).getAttributes().getNamedItem("href").getTextContent(), enclosureList.item(i), durationList.item(i).getTextContent());
 
 
             if(autoQueue){
