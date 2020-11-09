@@ -81,7 +81,7 @@
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
-                                    <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#skipBtn" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                    <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>
                                           <ImageView fx:id="forwardBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -89,10 +89,11 @@
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
-                                    <ImageView fx:id="podcastCover" fitHeight="109.0" fitWidth="115.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+                                    <ImageView fx:id="podcastCover" fitHeight="109.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                        <image>
                                           <Image url="@resources/rssFeedIcon.png" />
-                                       </image></ImageView>
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </GridPane>
                            </children>
@@ -115,7 +116,7 @@
                      <children>
                         <AnchorPane prefHeight="21.0" prefWidth="417.0">
                            <children>
-                              <Button fx:id="searchBtn" alignment="CENTER" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchBtn" prefHeight="33.0" prefWidth="55.0" text="Library">
+                              <Button fx:id="libBtn" alignment="CENTER" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#libBtn" prefHeight="33.0" prefWidth="55.0" text="Library">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets></Button>
