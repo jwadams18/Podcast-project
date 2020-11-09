@@ -19,10 +19,11 @@ import java.util.HashMap;
 public class Model {
 
     public final String ADD_WINDOW = "src/Main/resources/fxml/addWindow.fxml";
+    public final String LIB_WINDOW = "src/Main/resources/fxml/library.fxml";
 
 
     private FXMLLoader mainLoader, secondaryLoader;
-    private addWindowController test;
+    private addWindowController addWindow;
 
     private HashMap<String, NodeList> mostRecentRSSData = new HashMap<>();
     private String mostRecentPodcast;
@@ -152,11 +153,11 @@ public class Model {
     }
 
     public void setSecondaryController(addWindowController tst){
-        this.test = tst;
+        this.addWindow = tst;
     }
 
     public addWindowController getSecondaryController(){
-        return this.test;
+        return this.addWindow;
     }
 
     public HashMap<String, NodeList> getMostRecentRSSData() {
