@@ -74,7 +74,7 @@ public class Controller implements Initializable {
     private ImageView podcastCover;
 
     @FXML
-    private Button searchBtn;
+    private Button libBtn;
 
     @FXML
     private Label nowPlayingLabel;
@@ -135,16 +135,11 @@ public class Controller implements Initializable {
         queueView.getSelectionModel().selectFirst();
     }
 
-
-    public void searchBtn(ActionEvent event){
-        System.out.println("This is the search btn");
-    }
-
     public void addBtn(ActionEvent event) {
         Parent root;
         try {
             //Loads pop-up window using addWindow.fxml
-            root = FXMLLoader.load(new File("src/Main/addWindow.fxml").toURL());
+            root = FXMLLoader.load(new File(m.ADD_WINDOW).toURL());
             Stage stage = new Stage();
             stage.setTitle("Add new feed");
             stage.setScene(new Scene(root));
@@ -167,8 +162,23 @@ public class Controller implements Initializable {
 
     }
 
-    public void skipBtn(ActionEvent event){
-        System.out.println("This is the skip button");
+    public void libBtn(ActionEvent event){
+        Parent root;
+        try {
+            //Loads pop-up window using addWindow.fxml
+            root = FXMLLoader.load(new File(m.LIB_WINDOW).toURL());
+            Stage stage = new Stage();
+            stage.setTitle("My Library");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.showAndWait();
+            // Hide this current window (if this is what you want)
+//            ((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("This is the library button");
     }
 
     public void toggleBtn(ActionEvent event){

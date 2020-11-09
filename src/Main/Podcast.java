@@ -40,7 +40,7 @@ public class Podcast {
 
     @Override
     public String toString(){
-        return "[S"+this.season+":"+this.episode+"] "+this.title.get();
+        return this.title.get();
     }
 
     public String getAuthor() {
