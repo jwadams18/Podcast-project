@@ -90,11 +90,11 @@ public class Model {
             input.close();
 
         } catch (ParserConfigurationException | IOException e) {
+            System.err.println("PCE/IO Exception");
             validLink = false;
-            e.printStackTrace();
         } catch (SAXException e) {
+            System.err.println("SAX Exception");
             validLink = false;
-            System.err.println("Bad link");
         }
 
         return validLink;
