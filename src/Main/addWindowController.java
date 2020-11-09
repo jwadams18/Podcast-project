@@ -1,15 +1,11 @@
 package Main;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -17,12 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.w3c.dom.NodeList;
 
-import javax.swing.*;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.Key;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -31,7 +22,7 @@ public class addWindowController implements Initializable {
     private Model model = Main.model;
     //Pre-determined heights to use when displaying loadOptions or not
     private final int PRELOAD_HEIGHT = 250;
-    private final int POSTLOAD_HEIGHT = 375;
+    private final int POSTLOAD_HEIGHT = 400;
     private int maxNumPodcast;
     @FXML
     private AnchorPane addWindow;
@@ -73,6 +64,9 @@ public class addWindowController implements Initializable {
     private Spinner<Integer> podcastCountSpinner;
 
     @FXML
+    private CheckBox addToQueue;
+
+    @FXML
     private Label podcastCount;
     //TODO make default button
     //TODO clean up design
@@ -80,12 +74,13 @@ public class addWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource(model.ADD_WINDOW));
-        model.setAddWindowController(fxmlLoader);
-        model.setSecondaryController(this);
+        fxmlLoader.setLocation(getClass().getResource(model.ADD_WINDOW_PATH));
+        model.setSecondaryLoader(fxmlLoader);
+        model.setAddWindow(this);
 
         //Will be disabled until valid link provided, or the user can use cancel btn
         okBtn.setDisable(true);
+        addToQueue.setVisible(false);
 
         //TODO Do I need this? -- USING FOR TESTING -- WILL BE DELETED
         final EventHandler<KeyEvent> keyEventEventHandler =
@@ -103,16 +98,45 @@ public class addWindowController implements Initializable {
 
     /**
      * Linked to the Ok/Confirm button, will convert the data in the HashTable in model, to
-     * actual podcast objects
+     * actual podcast objects and add to library
      * @param event
      */
     @FXML
     void confirmAction(ActionEvent event){
         //TODO Implement
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("src/Main/resources/fxml/popup.fxml"));
+        fxmlLoader.setLocation(getClass().getResource(model.POPUP_WINDOW_PATH));
 
+        int numToLoad = getPodcastCount();
+        boolean autoQueue = addToQueue.isSelected();
+        HashMap<String, NodeList> rssData = model.getMostRecentRSSData();
+
+        NodeList titleList = rssData.get("title");
+        NodeList authorList = rssData.get("author");
+        NodeList imgList = rssData.get("image");
+        NodeList enclosureList = rssData.get("enclosures");
+
+        System.out.println("addWindowController: building "+numToLoad+" podcast");
+        for(int i = 0; i<numToLoad; i++){
+
+            System.out.println("Titles: "+titleList.getLength());
+            System.out.println("Authors: "+authorList.getLength());
+            System.out.println("Images: "+imgList.getLength());
+
+            Podcast temp = new Podcast(titleList.item(i+1).getTextContent(),authorList.item(i).getTextContent()
+                    , imgList.item(0).getAttributes().getNamedItem("href").getTextContent(), enclosureList.item(i));
+
+
+            if(autoQueue){
+                model.getQueueList().add(temp);
+            }
+            model.getPodcastList().add(temp);
+            System.out.println(temp.dump());
+        }
+
+        System.out.println(getClass().getName()+" building complete "+model.getPodcastList().size());
         closeAction(event);
+        model.getLibController().setListVisible(true);
     }
 
 
@@ -144,6 +168,7 @@ public class addWindowController implements Initializable {
             okBtn.setDefaultButton(true);
             addWindow.getScene().getWindow().setHeight(POSTLOAD_HEIGHT);
             loadOptions.setVisible(true);
+            addToQueue.setVisible(true);
 
             HashMap<String, NodeList> data = model.getMostRecentRSSData();
             loadAll.setText("Load " + data.get("title").getLength() + " episode(s)");
