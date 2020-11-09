@@ -109,30 +109,21 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" percentHeight="80.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="92.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <AnchorPane prefHeight="21.0" prefWidth="417.0">
+                        <AnchorPane GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="libBtn" alignment="CENTER" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#libBtn" prefHeight="33.0" prefWidth="55.0" text="Library">
+                              <Button fx:id="libBtn" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#libBtn" prefHeight="33.0" prefWidth="55.0" text="Library">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets></Button>
-                              <Label fx:id="nowPlayingLabel" alignment="CENTER" layoutX="67.0" layoutY="11.0" prefHeight="33.0" prefWidth="295.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="6.0" />
-                              <Button fx:id="addBtn" layoutX="362.0" layoutY="1.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="33.0" prefWidth="55.0" text="Add" AnchorPane.rightAnchor="0.0" />
-                           </children>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </AnchorPane>
-                        <AnchorPane GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="noteTitle" alignment="CENTER" prefHeight="36.0" prefWidth="417.0" text="Label" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Label fx:id="noteTitle" alignment="CENTER" layoutX="55.0" prefHeight="33.0" prefWidth="287.0" text="Label" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="0.0" />
+                              <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addBtn" prefHeight="33.0" prefWidth="55.0" text="Add" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
-                        <TextArea fx:id="noteArea" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                        <TextArea fx:id="noteArea" prefHeight="356.0" prefWidth="399.0" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin></TextArea>
