@@ -1,5 +1,7 @@
 package Main;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -17,8 +19,11 @@ import java.util.HashMap;
 
 public class Model {
 
-    public final String ADD_WINDOW = "src/Main/resources/fxml/addWindow.fxml";
-    public final String LIB_WINDOW = "src/Main/resources/fxml/library.fxml";
+    public final String ADD_WINDOW_PATH = "resources/fxml/addWindow.fxml";
+    public final String LIB_WINDOW_PATH = "resources/fxml/library.fxml";
+    public final String POPUP_WINDOW_PATH = "resources/fxml/popup.fxml";
+    public final String PODCAST_CELL_PATH = "resources/fxml/PodcastCell.fxml";
+    public final String LIBRARY_VIEWCELL_PATH = "resources/fxml/libListViewCell.fxml";
 
 
     private FXMLLoader mainLoader, secondaryLoader;
@@ -28,16 +33,15 @@ public class Model {
     private HashMap<String, NodeList> mostRecentRSSData = new HashMap<>();
     private String mostRecentPodcast;
 
-    public Model(){
-
-    }
+    private ObservableList<Podcast> podcastList = FXCollections.observableArrayList(Podcast.extractor);
+    private ObservableList<Podcast> queueList = FXCollections.observableArrayList(Podcast.extractor);
 
     public static void fillSampleData(ObservableList<Podcast> backingList) {
-        backingList.add(new Podcast("Name 1", "Author 1", new JTextArea("Welcome to the new season!"), "resources/playIcon.png"));
-        backingList.add(new Podcast("Name 2", "Author 2",  new JTextArea("Episode one was much better!"), "resources/playIcon.png"));
-        backingList.add(new Podcast("Name 3", "Author 3",  new JTextArea("When is the new season coming out?"), "resources/playIcon.png"));
-        backingList.add(new Podcast("Name 4", "Author 4",  new JTextArea("LAST EPISODE!"), "resources/playIcon.png"));
-        backingList.add(new Podcast("Name 5", "Author 5", new JTextArea("SEASON 2!!"), "resources/playIcon.png"));
+//        backingList.add(new Podcast("Name 1", "Author 1", new JTextArea("Welcome to the new season!"), "resources/playIcon.png"));
+//        backingList.add(new Podcast("Name 2", "Author 2",  new JTextArea("Episode one was much better!"), "resources/playIcon.png"));
+//        backingList.add(new Podcast("Name 3", "Author 3",  new JTextArea("When is the new season coming out?"), "resources/playIcon.png"));
+//        backingList.add(new Podcast("Name 4", "Author 4",  new JTextArea("LAST EPISODE!"), "resources/playIcon.png"));
+//        backingList.add(new Podcast("Name 5", "Author 5", new JTextArea("SEASON 2!!"), "resources/playIcon.png"));
     }
 
     public boolean loadData(String urlEntry){
@@ -136,44 +140,28 @@ public class Model {
 //        } catch (NullPointerException ignored){}
     }
 
-    public void setMainController(FXMLLoader fxmlCtr){
-        this.mainLoader = fxmlCtr;
+    public FXMLLoader getMainLoader() {
+        return mainLoader;
     }
 
-    public FXMLLoader getMainController(){
-        return this.mainLoader;
+    public void setMainLoader(FXMLLoader mainLoader) {
+        this.mainLoader = mainLoader;
     }
 
-    public void setAddWindowController(FXMLLoader fxmlCntr){
-        this.secondaryLoader = fxmlCntr;
-    }
-
-    public FXMLLoader getAddWindowController(){
+    public FXMLLoader getSecondaryLoader() {
         return secondaryLoader;
     }
 
-    public void setSecondaryController(addWindowController tst){
-        this.addWindow = tst;
+    public void setSecondaryLoader(FXMLLoader secondaryLoader) {
+        this.secondaryLoader = secondaryLoader;
     }
 
-    public addWindowController getSecondaryController(){
-        return this.addWindow;
+    public addWindowController getAddWindow() {
+        return addWindow;
     }
 
-    public HashMap<String, NodeList> getMostRecentRSSData() {
-        return mostRecentRSSData;
-    }
-
-    public void setMostRecentRSSData(HashMap<String, NodeList> mostRecentRSSData) {
-        this.mostRecentRSSData = mostRecentRSSData;
-    }
-
-    public String getMostRecentPodcast() {
-        return mostRecentPodcast;
-    }
-
-    public void setMostRecentPodcast(String mostRecentPodcast) {
-        this.mostRecentPodcast = mostRecentPodcast;
+    public void setAddWindow(addWindowController addWindow) {
+        this.addWindow = addWindow;
     }
 
     public LibraryController getLibController() {
@@ -183,4 +171,21 @@ public class Model {
     public void setLibController(LibraryController libController) {
         this.libController = libController;
     }
+
+    public HashMap<String, NodeList> getMostRecentRSSData() {
+        return mostRecentRSSData;
+    }
+
+    public String getMostRecentPodcast() {
+        return mostRecentPodcast;
+    }
+
+    public ObservableList<Podcast> getPodcastList() {
+        return podcastList;
+    }
+
+    public ObservableList<Podcast> getQueueList() {
+        return queueList;
+    }
+
 }
