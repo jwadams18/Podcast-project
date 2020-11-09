@@ -2,7 +2,6 @@ package Main;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ProgressBar;
@@ -12,6 +11,8 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 
 public class PodcastCell extends ListCell<Podcast>{
+
+    private Model model = Main.model;
 
     @FXML
     private HBox container;
@@ -36,7 +37,7 @@ public class PodcastCell extends ListCell<Podcast>{
     public void loadFXML(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("PodcastCell.fxml"));
+            loader.setLocation(getClass().getResource(model.PODCAST_CELL_PATH));
             loader.setController(this);
 //            loader.setRoot(this);
             loader.load();
