@@ -53,6 +53,7 @@ public class Model {
         NodeList epiList = null;
         NodeList imgList = null;
         NodeList enclosureList = null;
+        NodeList durationList = null;
 
         try {
             URL url = new URL(urlEntry);
@@ -83,12 +84,14 @@ public class Model {
             authorList = document.getElementsByTagName("itunes:author");
             imgList = document.getElementsByTagName("itunes:image");
             enclosureList = document.getElementsByTagName("enclosure");
+            durationList = document.getElementsByTagName("itunes:duration");
 
             mostRecentPodcast = titleList.item(0).getTextContent();
             mostRecentRSSData.put("title", titleList);
             mostRecentRSSData.put("author", authorList);
             mostRecentRSSData.put("image", imgList);
-            mostRecentRSSData.put("enclosures", enclosureList);
+            mostRecentRSSData.put("enclosure", enclosureList);
+            mostRecentRSSData.put("duration", durationList);
 
 
             input.close();
