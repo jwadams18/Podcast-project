@@ -101,6 +101,9 @@ public class LibraryController implements Initializable {
     @FXML
     public void backAction(ActionEvent event) {
         System.out.println("hello world");
+        Stage stage = (Stage) backBtn.getScene().getWindow();
+        stage.close();
     }
+
 
 }
