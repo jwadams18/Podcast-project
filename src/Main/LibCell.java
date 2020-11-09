@@ -39,13 +39,16 @@ public class LibCell extends ListCell<Podcast> {
     public void loadFXML(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("src/Main/resources/fxml/libListViewCell.fxml"));
+            loader.setLocation(getClass().getResource(Main.model.LIBRARY_VIEWCELL_PATH));
             loader.setController(this);
 //            loader.setRoot(this);
             loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        queueBtn.setOnAction(this::queuePodcast);
+        queueBtn.setOnAction(this::removeAction);
     }
 
     @Override
