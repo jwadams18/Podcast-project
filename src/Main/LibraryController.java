@@ -17,13 +17,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LibraryController implements Initializable {
 
-    private Model m = Main.model;
+    private Model model = Main.model;
     private final ObservableList<Podcast> libraryList = FXCollections.observableArrayList(Podcast.extractor);
     private ChangeListener<Podcast> libraryChangeListener;
     private Podcast selectedPodcast;
@@ -44,7 +43,10 @@ public class LibraryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Stores controller in model, so we can transfer data between if needed
-        m.setLibController(this);
+        model.setLibController(this);
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(model.LIB_WINDOW_PATH));
 
         //Sets the 'format' for listView
         libraryView.setCellFactory(new LibCellFactory());
@@ -54,7 +56,7 @@ public class LibraryController implements Initializable {
 //        Model.fillSampleData(libraryList);
 
         //Sorts list based on comparator defined below
-        SortedList<Podcast> sortedList = new SortedList<>(libraryList);
+        SortedList<Podcast> sortedList = new SortedList<>(model.getPodcastList());
 
         sortedList.setComparator((Podcast1, Podcast2) -> {
             int result = Podcast1.getAuthor().compareToIgnoreCase(Podcast2.getAuthor());
@@ -84,7 +86,7 @@ public class LibraryController implements Initializable {
         Parent root;
         try {
             //Loads pop-up window using addWindow.fxml
-            root = FXMLLoader.load(new File(m.ADD_WINDOW).toURL());
+            root = FXMLLoader.load(getClass().getResource(model.ADD_WINDOW_PATH));
             Stage stage = new Stage();
             stage.setTitle("Add new feed");
             stage.setScene(new Scene(root));
@@ -105,5 +107,11 @@ public class LibraryController implements Initializable {
         stage.close();
     }
 
-
+    /**
+     * To avoid confusion with the name, when the list is visible then the listCover must be invisible (opposite)
+     * @param value true/false 
+     */
+    public void setListVisible(boolean value){
+        listCover.setVisible(!value);
+    }
 }
