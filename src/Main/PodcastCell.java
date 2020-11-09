@@ -10,8 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class PodcastCell extends ListCell<Podcast>{
 
@@ -45,7 +43,6 @@ public class PodcastCell extends ListCell<Podcast>{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Podcastcell.fxml loaded");
     }
 
     @Override
