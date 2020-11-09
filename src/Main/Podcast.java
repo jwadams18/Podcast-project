@@ -4,6 +4,7 @@ import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
+import org.w3c.dom.Node;
 
 import javax.swing.*;
 import java.util.Random;
@@ -12,9 +13,9 @@ public class Podcast {
 
     private final StringProperty author = new SimpleStringProperty(this, "author", "");
     private final StringProperty title = new SimpleStringProperty(this, "title", "");
-    private int episode, season, progress;
+    private int  progress, maxProgress;
     private JTextArea noteArea;
-    private String imgPath;
+    private String imgPath, enclosurePath;
     private boolean isPlaying, hasNotes;
 
     public Podcast(){
@@ -25,15 +26,20 @@ public class Podcast {
 
     }
 
-    public Podcast(String Title, String Author, JTextArea noteArea, String imgPath){
+    public Podcast(String Title, String Author, String imgPath, Node enclosure){
 
         this.title.set(Title);
         this.author.set(Author);
-        this.noteArea = noteArea;
+        this.noteArea = new JTextArea();
+        this.noteArea.setText("Write your first note here!");
+
         this.imgPath = imgPath;
         this.progress = 50;
         this.isPlaying = false;
-        this.hasNotes = true;
+        this.hasNotes = false;
+
+        this.enclosurePath = enclosure.getAttributes().getNamedItem("url").getTextContent();
+        this.maxProgress = Integer.parseInt(enclosure.getAttributes().getNamedItem("length").getTextContent());
 
     }
 
@@ -97,4 +103,8 @@ public class Podcast {
 
     public static Callback<Podcast, Observable[]> extractor = p -> new Observable[]
             {p.title};
+
+    public String dump(){
+        return this.title.get()+" "+this.author.get()+" "+this.imgPath+" "+this.enclosurePath+" "+this.maxProgress;
+    }
 }
