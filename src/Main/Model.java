@@ -5,7 +5,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,6 +23,7 @@ public class Model {
 
     private FXMLLoader mainLoader, secondaryLoader;
     private addWindowController addWindow;
+    private LibraryController libController;
 
     private HashMap<String, NodeList> mostRecentRSSData = new HashMap<>();
     private String mostRecentPodcast;
@@ -174,5 +174,13 @@ public class Model {
 
     public void setMostRecentPodcast(String mostRecentPodcast) {
         this.mostRecentPodcast = mostRecentPodcast;
+    }
+
+    public LibraryController getLibController() {
+        return libController;
+    }
+
+    public void setLibController(LibraryController libController) {
+        this.libController = libController;
     }
 }
