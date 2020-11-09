@@ -26,7 +26,7 @@ import java.security.Key;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class secondaryController implements Initializable {
+public class addWindowController implements Initializable {
 
     private Model model = Main.model;
     //Pre-determined heights to use when displaying loadOptions or not
@@ -80,7 +80,7 @@ public class secondaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("src/Main/addWindow.fxml"));
+        fxmlLoader.setLocation(getClass().getResource(model.ADD_WINDOW));
         model.setAddWindowController(fxmlLoader);
         model.setSecondaryController(this);
 
@@ -137,7 +137,7 @@ public class secondaryController implements Initializable {
         boolean validLink = model.loadData(rssLink.getText());
 
 
-        if(validLink){
+        if(validLink) {
             //Modifies scene for loading options
             okBtn.setDisable(false);
             searchBtn.setDefaultButton(false);
@@ -146,33 +146,36 @@ public class secondaryController implements Initializable {
             loadOptions.setVisible(true);
 
             HashMap<String, NodeList> data = model.getMostRecentRSSData();
-            loadAll.setText("Load "+data.get("title").getLength()+" episode(s)");
+            loadAll.setText("Load " + data.get("title").getLength() + " episode(s)");
 
             //Creates spinner to define the number of podcast to load
             maxNumPodcast = data.get("title").getLength();
-            podcastCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, maxNumPodcast, maxNumPodcast/2, 1));
+            podcastCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, maxNumPodcast, maxNumPodcast / 2, 1));
             podcastCountSpinner.setEditable(true);
 
             //TODO remove once comfortable that spinner is working right
             podcastCountSlider.setMin(1);
-            podcastCountSlider.setMax(data.get("title").getLength()-1);
+            podcastCountSlider.setMax(data.get("title").getLength() - 1);
             podcastCountSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                     event -> {
-                loadSome.setText("Load "+(int) podcastCountSlider.getValue()+" episode(s)");
-            });
+                        loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
+                    });
             podcastCountSlider.addEventHandler(KeyEvent.KEY_PRESSED,
                     event -> {
-                        loadSome.setText("Load "+(int) podcastCountSlider.getValue()+" episode(s)");
+                        loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
                     });
             podcastCountSlider.setValue(data.get("title").getLength() / 2);
-            loadSome.setText("Load "+(int) podcastCountSlider.getValue()+" episode(s)");
+            loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
             //END SLIDER CODE THAT WILL BE REMOVED
 
             //Sets the label above radio buttons to podcast linked in textbox
             podcastNameDisplay.setText(model.getMostRecentPodcast());
-
         } else {
-            System.err.println("Not a valid link");
+            //Basic link correction
+            //TODO Change to shake with red-outline if time allows for design
+            if(!(rssLink.getText().startsWith("https://") || rssLink.getText().startsWith("http://"))){
+                rssLink.setText("https://"+rssLink.getText());
+            }
         }
     }
 
