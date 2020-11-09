@@ -9,6 +9,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
@@ -30,7 +31,10 @@ public class LibCell extends ListCell<Podcast> {
     private Button removeBtn;
 
     @FXML
-    private Label podcastAuthor;
+    private Button viewNotes;
+
+    @FXML
+    private Label podcastPubDate;
 
     @FXML
     private Label podcastDuration;
@@ -62,18 +66,28 @@ public class LibCell extends ListCell<Podcast> {
         if (empty || podcast == null) {
             podCastTitle.setVisible(false);
             podcastDuration.setVisible(false);
-            podcastAuthor.setVisible(false);
+            podcastPubDate.setVisible(false);
             podcastDuration.setVisible(false);
+            HBox temp = new HBox();
+            temp.setPrefHeight(55.0);
+            setGraphic(temp);
         } else {
-            System.out.println(getClass().getName()+" "+podcast.dump());
             podCastTitle.setVisible(true);
             podCastTitle.setText(podcast.getTitle());
             podcastCover.setImage(new Image(podcast.getImgPath()));
-            podcastAuthor.setVisible(true);
-            podcastAuthor.setText(podcast.getAuthor());
+            podcastPubDate.setVisible(true);
+            podcastPubDate.setText(podcast.getPubDate());
             podcastDuration.setVisible(true);
             podcastDuration.setText(podcast.getDuration());
-            container.setPrefWidth(830);
+
+            if(podcast.hasNotes()){
+                viewNotes.setDisable(false);
+            } else {
+                //TODO make a hover message saying no notes?
+                viewNotes.setDisable(true);
+            }
+
+
             setGraphic(container);
         }
 

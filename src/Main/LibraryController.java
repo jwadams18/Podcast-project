@@ -102,14 +102,14 @@ public class LibraryController implements Initializable {
 
     @FXML
     public void backAction(ActionEvent event) {
-        System.out.println("hello world");
         Stage stage = (Stage) backBtn.getScene().getWindow();
         stage.close();
+        //TODO when closed bring queue back to the front
     }
 
     /**
      * To avoid confusion with the name, when the list is visible then the listCover must be invisible (opposite)
-     * @param value true/false 
+     * @param value true/false
      */
     public void setListVisible(boolean value){
         listCover.setVisible(!value);
