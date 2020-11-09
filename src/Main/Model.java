@@ -2,7 +2,6 @@ package Main;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -14,14 +13,16 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
 public class Model {
 
+    public final String ADD_WINDOW = "src/Main/resources/fxml/addWindow.fxml";
+
+
     private FXMLLoader mainLoader, secondaryLoader;
-    private secondaryController test;
+    private addWindowController test;
 
     private HashMap<String, NodeList> mostRecentRSSData = new HashMap<>();
     private String mostRecentPodcast;
@@ -150,11 +151,11 @@ public class Model {
         return secondaryLoader;
     }
 
-    public void setSecondaryController(secondaryController tst){
+    public void setSecondaryController(addWindowController tst){
         this.test = tst;
     }
 
-    public secondaryController getSecondaryController(){
+    public addWindowController getSecondaryController(){
         return this.test;
     }
 
