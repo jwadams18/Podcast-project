@@ -71,9 +71,6 @@ public class Controller implements Initializable {
     private Button libBtn;
 
     @FXML
-    private Label nowPlayingLabel;
-
-    @FXML
     private Button addBtn;
 
     @FXML
@@ -95,8 +92,6 @@ public class Controller implements Initializable {
         queueView.setCellFactory(new PodcastCellFactory());
         queueView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        //Fills will sample data from Model, will be replaced when back-end loading is finished
-//        Model.fillSampleData(queueList);
         //Sorts list based on comparator defined below
         SortedList<Podcast> sortedList = new SortedList<>(m.getQueueList());
 
@@ -114,10 +109,20 @@ public class Controller implements Initializable {
         //Listener that will update info (notes, title, podcast cover)
         queueView.getSelectionModel().selectedItemProperty().addListener(
                 podcastChangeListener = ((observableValue, oldValues, newValue) -> {
+                    System.out.println(observableValue.getValue());
+                    //Need to stop playing if one is playing
+                    if(oldValues != null && oldValues.isPlaying()){
+                        oldValues.togglePlaying();
+                    }
+
+                    //Re-enable buttons if the list was previously empty
+                    toggleBtn.setDisable(false);
+                    forwardBtn.setDisable(false);
+                    backBtn.setDisable(false);
+
                     System.out.println("Selected item: "+newValue+" current progress "+newValue.getProgress());
                     selectedPodcast = newValue;
 
-                    //TODO set properties here
                     noteTitle.setText(selectedPodcast.getTitle()+" notes");
                     //TODO need to make listener to auto-save the text for the notes
                     noteArea.setText(selectedPodcast.getNoteArea().getText());
@@ -130,21 +135,30 @@ public class Controller implements Initializable {
                 }));
         //Set default selection to first
         queueView.getSelectionModel().selectFirst();
+
+        //If list is empty then buttons will disable to prevent weird cases
+        if(queueView.getSelectionModel().getSelectedItem() == null){
+            toggleBtn.setDisable(true);
+            forwardBtn.setDisable(true);
+            backBtn.setDisable(true);
+        } else {
+            toggleBtn.setDisable(false);
+            forwardBtn.setDisable(false);
+            backBtn.setDisable(false);
+        }
     }
 
     public void addBtn(ActionEvent event) {
         Parent root;
         try {
             //Loads pop-up window using addWindow.fxml
-//            root = FXMLLoader.load(new File(m.ADD_WINDOW_PATH).toURL());
             root = FXMLLoader.load(getClass().getResource(m.ADD_WINDOW_PATH));
             Stage stage = new Stage();
             stage.setTitle("Add new feed");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
             stage.showAndWait();
-            // Hide this current window (if this is what you want)
-//            ((Node)(event.getSource())).getScene().getWindow().hide();
+
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -156,9 +170,10 @@ public class Controller implements Initializable {
 
         //Will be null if addWindow is closed or cancelled
         //TODO Is this needed?
-        if(!rssFeed.isBlank()){
-            buildPodcast(rssFeed, m.getAddWindow().getPodcastCount());
-        }
+//        if(!rssFeed.isBlank()){
+//            System.out.println("Does this run?");
+//            buildPodcast(rssFeed, m.getAddWindow().getPodcastCount());
+//        }
 
     }
 
@@ -172,8 +187,6 @@ public class Controller implements Initializable {
             stage.setScene(new Scene(root));
             stage.setResizable(false);
             stage.showAndWait();
-            // Hide this current window (if this is what you want)
-//            ((Node)(event.getSource())).getScene().getWindow().hide();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -182,16 +195,22 @@ public class Controller implements Initializable {
     }
 
     public void toggleBtn(ActionEvent event){
-        //TODO find why icons aren't loading
-        //TODO make sure when a podcast is playing it is stopped before playing another one
         Image img = null;
 
-        if(isPlaying){
-            img = new Image("images/playIcon.png");
+        if(selectedPodcast == null){
+            toggleBtn.setDisable(true);
+            return;
         } else {
-            img = new Image("images/pause.png");
+            toggleBtn.setDisable(false);
         }
 
+        if(isPlaying){
+            img = new Image(getClass().getResource("resources/playIcon.png").toExternalForm());
+        } else {
+            img = new Image(getClass().getResource("resources/pause.png").toExternalForm());
+        }
+
+        selectedPodcast.togglePlaying();
         isPlaying = !isPlaying;
         toggleBtnIcon.setImage(img);
 
