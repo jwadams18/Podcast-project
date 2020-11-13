@@ -26,7 +26,8 @@ public class Model {
     public final String LIBRARY_VIEWCELL_PATH = "resources/fxml/libListViewCell.fxml";
 
 
-    private FXMLLoader mainLoader, secondaryLoader;
+//    private FXMLLoader mainLoader, secondaryLoader;
+    private Controller mainWindow;
     private addWindowController addWindow;
     private LibraryController libController;
 
@@ -142,21 +143,25 @@ public class Model {
 //        } catch (NullPointerException ignored){}
     }
 
-    public FXMLLoader getMainLoader() {
-        return mainLoader;
-    }
+//    public FXMLLoader getMainLoader() {
+//        return mainLoader;
+//    }
+//
+//    public void setMainLoader(FXMLLoader mainLoader) {
+//        this.mainLoader = mainLoader;
+//    }
+//
+//    public FXMLLoader getSecondaryLoader() {
+//        return secondaryLoader;
+//    }
+//
+//    public void setSecondaryLoader(FXMLLoader secondaryLoader) {
+//        this.secondaryLoader = secondaryLoader;
+//    }
 
-    public void setMainLoader(FXMLLoader mainLoader) {
-        this.mainLoader = mainLoader;
-    }
+    public Controller getMainWindow() { return mainWindow; }
 
-    public FXMLLoader getSecondaryLoader() {
-        return secondaryLoader;
-    }
-
-    public void setSecondaryLoader(FXMLLoader secondaryLoader) {
-        this.secondaryLoader = secondaryLoader;
-    }
+    public void setMainWindow(Controller mainWindow) { this.mainWindow = mainWindow; }
 
     public addWindowController getAddWindow() {
         return addWindow;
@@ -167,7 +172,7 @@ public class Model {
     }
 
     public LibraryController getLibController() {
-        return libController;
+        return this.libController;
     }
 
     public void setLibController(LibraryController libController) {
