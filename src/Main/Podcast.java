@@ -16,6 +16,7 @@ public class Podcast {
     private final StringProperty title = new SimpleStringProperty(this, "title", "");
     private final BooleanProperty isPlaying = new SimpleBooleanProperty(this, "isPlaying", false);
     private final BooleanProperty hasNotes = new SimpleBooleanProperty(this, "hasNotes", false);
+    private final BooleanProperty isQueued = new SimpleBooleanProperty(this, "isQueued", false);
     private int  progress, maxProgress;
     private JTextArea noteArea;
     private String imgPath, enclosurePath, duration, pubDate;
@@ -82,7 +83,16 @@ public class Podcast {
     public String getPubDate() { return this.pubDate; }
 
     public boolean isPlaying() {
-        return this.isPlaying.get();
+//        return this.isPlaying.get();
+        return true;
+    }
+
+    public boolean isQueued(){
+        return this.isQueued.get();
+    }
+
+    public void setQueued(boolean value){
+        this.isQueued.set(value);
     }
 
     public void togglePlaying() {
@@ -91,7 +101,9 @@ public class Podcast {
     }
 
     public boolean hasNotes(){
-        return !noteArea.getText().equalsIgnoreCase("Write your first note here!");
+        //TODO fix this
+//        return !noteArea.getText().equalsIgnoreCase("Write your first note here!");
+        return true;
     }
 
     public static Callback<Podcast, Observable[]> extractor = p -> new Observable[]
