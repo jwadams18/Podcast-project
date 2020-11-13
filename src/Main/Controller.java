@@ -115,22 +115,30 @@ public class Controller implements Initializable {
                     }
 
                     //Re-enable buttons if the list was previously empty
-                    toggleBtn.setDisable(false);
-                    forwardBtn.setDisable(false);
-                    backBtn.setDisable(false);
+                    if(newValue != null){
+                        toggleBtn.setDisable(false);
+                        forwardBtn.setDisable(false);
+                        backBtn.setDisable(false);
 
-                    System.out.println("Selected item: "+newValue+" current progress "+newValue.getProgress());
-                    selectedPodcast = newValue;
+                        System.out.println("Selected item: "+newValue+" current progress "+newValue.getProgress());
+                        selectedPodcast = newValue;
+                        noteTitle.setVisible(true);
+                        noteTitle.setText(selectedPodcast.getTitle()+" notes");
+                        //TODO need to make listener to auto-save the text for the notes
+                        noteArea.setText(selectedPodcast.getNoteArea().getText());
+                        Image img = new Image(selectedPodcast.getImgPath());
+                        podcastCover.setImage(img);
+                        podcastCover.setPreserveRatio(true);
+                        podcastCover.setSmooth(true);
+                        podcastCover.setFitHeight(145);
+                        podcastCover.setFitWidth(200);
+                        podcastCover.setVisible(true);
+                    } else {
+                        noteTitle.setVisible(false);
+                        noteArea.setText("No podcast selected!");
+                        podcastCover.setVisible(false);
 
-                    noteTitle.setText(selectedPodcast.getTitle()+" notes");
-                    //TODO need to make listener to auto-save the text for the notes
-                    noteArea.setText(selectedPodcast.getNoteArea().getText());
-                    Image img = new Image(selectedPodcast.getImgPath());
-                    podcastCover.setImage(img);
-                    podcastCover.setPreserveRatio(true);
-                    podcastCover.setSmooth(true);
-                    podcastCover.setFitHeight(165);
-                    podcastCover.setFitWidth(200);
+                    }
                 }));
         //Set default selection to first
         queueView.getSelectionModel().selectFirst();
