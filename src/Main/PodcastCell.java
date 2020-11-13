@@ -1,8 +1,10 @@
 package Main;
 
 import Main.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ProgressBar;
@@ -30,6 +32,11 @@ public class PodcastCell extends ListCell<Podcast>{
 
     @FXML
     private ImageView isPlaying;
+
+    @FXML
+    private Button removeBtn;
+
+    private Podcast podcast;
 
 
     public PodcastCell(){
@@ -65,6 +72,8 @@ public class PodcastCell extends ListCell<Podcast>{
             podcastProgress.setProgress(podcast.getProgress());
             podcastProgress.setVisible(true);
 
+            this.podcast = podcast;
+
             if(podcast.hasNotes()){
                 hasNotes.setVisible(true);
             } else {
@@ -75,9 +84,15 @@ public class PodcastCell extends ListCell<Podcast>{
             } else {
                 isPlaying.setVisible(false);
             }
-
             setGraphic(container);
         }
 
+    }
+    @FXML
+    public void removeAction(ActionEvent event){
+        if(model.getQueueList().contains(podcast)){
+            podcast.setQueued(false);
+            model.getQueueList().remove(podcast);
+        }
     }
 }
