@@ -1,5 +1,6 @@
 package Main;
 
+import Main.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -64,9 +65,6 @@ public class PodcastCell extends ListCell<Podcast>{
             podcastProgress.setProgress(podcast.getProgress());
             podcastProgress.setVisible(true);
 
-            System.out.println(getClass().getName()+" "+podcast.hasNotes());
-            System.out.println(getClass().getName()+" "+podcast.isPlaying());
-
             if(podcast.hasNotes()){
                 hasNotes.setVisible(true);
             } else {
@@ -81,6 +79,5 @@ public class PodcastCell extends ListCell<Podcast>{
             setGraphic(container);
         }
 
-//        setContentDisplay(ContentDisplay.CENTER);
     }
 }
