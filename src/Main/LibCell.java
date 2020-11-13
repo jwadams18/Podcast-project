@@ -1,5 +1,7 @@
 package Main;
 
+import Main.Main;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +41,7 @@ public class LibCell extends ListCell<Podcast> {
     @FXML
     private Label podcastDuration;
 
+    private Podcast podcast;
 
     public LibCell() {
         loadFXML();
@@ -55,13 +58,15 @@ public class LibCell extends ListCell<Podcast> {
         }
 
         queueBtn.setOnAction(this::queuePodcast);
-        queueBtn.setOnAction(this::removeAction);
+        removeBtn.setOnAction(this::removeAction);
+        viewNotes.setOnAction(this::viewNotes);
     }
 
     @Override
     protected void updateItem(Podcast podcast, boolean empty) {
         super.updateItem(podcast, empty);
 
+        this.podcast = podcast;
 
         if (empty || podcast == null) {
             podCastTitle.setVisible(false);
@@ -87,6 +92,9 @@ public class LibCell extends ListCell<Podcast> {
                 viewNotes.setDisable(true);
             }
 
+            if(podcast.isQueued()){
+                queueBtn.setDisable(true);
+            }
 
             setGraphic(container);
         }
@@ -96,11 +104,24 @@ public class LibCell extends ListCell<Podcast> {
 
     @FXML
     void queuePodcast(ActionEvent event) {
-
+        //TODO if time allows set button to green on click, or check mark?
+        ObservableList<Podcast> queueList = Main.model.getQueueList();
+        if(!queueList.contains(podcast)){
+            queueList.add(podcast);
+            podcast.setQueued(true);
+            queueBtn.setDisable(true);
+        }
     }
 
     @FXML
     void removeAction(ActionEvent event) {
+        System.out.println("Remove btn");
+    }
+
+
+    @FXML
+    void viewNotes(ActionEvent event) {
+        System.out.println("View notes");
 
     }
 
