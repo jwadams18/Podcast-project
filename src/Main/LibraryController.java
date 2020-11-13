@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +16,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -51,9 +54,6 @@ public class LibraryController implements Initializable {
         //Sets the 'format' for listView
         libraryView.setCellFactory(new LibCellFactory());
         libraryView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        //Fills with sample data from model
-//        Model.fillSampleData(libraryList);
 
         //Sorts list based on comparator defined below
         SortedList<Podcast> sortedList = new SortedList<>(model.getPodcastList());
@@ -104,6 +104,7 @@ public class LibraryController implements Initializable {
     public void backAction(ActionEvent event) {
         Stage stage = (Stage) backBtn.getScene().getWindow();
         stage.close();
+        model.getMainWindow().setOnTop();
         //TODO when closed bring queue back to the front
     }
 
