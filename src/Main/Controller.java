@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,12 +18,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -82,12 +80,13 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         //Loads the fxml files for sample scene
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("sample.fxml"));
-        m.setMainLoader(fxmlLoader);
+        m.setMainWindow(this);
 
+        //Pre-loads library so the library controller can be used before viewing the library
+        loadExternalScenes();
         //Sets the "factory" that will make each new listView cell, set selection to single
         queueView.setCellFactory(new PodcastCellFactory());
         queueView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -191,7 +190,6 @@ public class Controller implements Initializable {
         catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("This is the library button");
     }
 
     public void toggleBtn(ActionEvent event){
@@ -221,10 +219,23 @@ public class Controller implements Initializable {
         System.out.println("This is the back btn");
     }
 
-    public Podcast buildPodcast(String urlEntry, int numToLoad){
+    /**
+     * Used to load scenes other than the main queue scene (sample.fxml)
+     */
+    public void loadExternalScenes(){
+        try {
+            FXMLLoader.load(getClass().getResource(m.LIB_WINDOW_PATH));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-        return null;
+    /**
+     * Brings window to front if other windows have covered the main scene
+     */
+    public void setOnTop(){
+        Stage temp = (Stage) queueView.getScene().getWindow();
+        temp.toFront();
     }
 
 
