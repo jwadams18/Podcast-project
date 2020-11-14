@@ -1,6 +1,8 @@
 package Main;
 
 import Main.Main;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +59,12 @@ public class PodcastCell extends ListCell<Podcast>{
 
     @Override
     protected void updateItem(Podcast podcast, boolean empty) {
+        boolean wasEmpty = isEmpty();
         super.updateItem(podcast, empty);
+
+        final ChangeListener<Boolean> changeListener =(observableValue, oldValue, newValue) -> {
+            System.out.println( observableValue+" The observableValue has " + "changed: oldValue = " + oldValue + ", newValue = " + newValue);
+        };
 
         if(empty || podcast == null) {
             podcastTitle.setVisible(false);
@@ -74,6 +81,13 @@ public class PodcastCell extends ListCell<Podcast>{
 
             this.podcast = podcast;
 
+            //Watches the isPlaying/isQueued/hasNotes properties and updates the icons
+            //Only adds a listener if cell was previously empty
+            if(wasEmpty != empty){
+                this.podcast.isPlayingProperty().addListener(changeListener);
+                this.podcast.hasNotesProperty().addListener(changeListener);
+                this.podcast.isQueuedProperty().addListener(changeListener);
+            }
             if(podcast.hasNotes()){
                 hasNotes.setVisible(true);
             } else {
