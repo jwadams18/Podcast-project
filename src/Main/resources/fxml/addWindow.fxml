@@ -18,9 +18,9 @@
 <AnchorPane fx:id="addWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="375.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.addWindowController">
    <children>
       <TextField fx:id="rssLink" layoutX="28.0" layoutY="116.0" prefHeight="40.0" prefWidth="309.0" promptText="Enter URL" />
-      <ButtonBar layoutX="173.0" layoutY="300.0" prefHeight="25.0" prefWidth="165.0" AnchorPane.bottomAnchor="25.0">
+      <ButtonBar layoutX="183.0" layoutY="339.0" prefHeight="25.0" prefWidth="165.0" AnchorPane.bottomAnchor="14.0">
         <buttons>
-          <Button fx:id="okBtn" alignment="CENTER" mnemonicParsing="false" onAction="#confirmAction" prefHeight="25.0" prefWidth="87.0" text="OK" translateX="-15.0" />
+          <Button fx:id="okBtn" alignment="CENTER" mnemonicParsing="false" onAction="#confirmAction" text="OK" translateX="-15.0" />
             <Button alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#closeAction" text="CANCEL" />
         </buttons>
       </ButtonBar>
@@ -34,7 +34,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Pane fx:id="loadOptions" layoutX="31.0" layoutY="189.0" prefHeight="136.0" prefWidth="338.0" AnchorPane.bottomAnchor="58.0">
+      <Pane fx:id="loadOptions" layoutX="31.0" layoutY="189.0" prefHeight="152.0" prefWidth="338.0" AnchorPane.bottomAnchor="42.0">
          <children>
             <RadioButton fx:id="loadAll" layoutY="90.0" mnemonicParsing="false" text="RadioButton">
                <toggleGroup>
@@ -54,7 +54,7 @@
             <RadioButton fx:id="loadSingle" layoutY="35.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="173.0" selected="true" text="Load most recent episode" toggleGroup="$loadOption" />
             <Slider fx:id="podcastCountSlider" blockIncrement="1.0" layoutX="201.0" layoutY="32.0" prefHeight="14.0" prefWidth="137.0" />
             <Label fx:id="podcastNameDisplay" layoutY="2.0" prefHeight="25.0" prefWidth="338.0" text="Label" />
-            <CheckBox fx:id="addToQueue" layoutY="141.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="115.0" text="Add to queue" />
+            <CheckBox fx:id="addToQueue" layoutY="130.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="99.0" text="Add to queue" />
          </children>
       </Pane>
       <Button fx:id="searchBtn" defaultButton="true" layoutX="338.0" layoutY="116.0" mnemonicParsing="false" onAction="#loadUrl" prefHeight="40.0" prefWidth="31.0" AnchorPane.rightAnchor="6.0">

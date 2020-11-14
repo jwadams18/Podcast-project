@@ -75,7 +75,6 @@ public class addWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(model.ADD_WINDOW_PATH));
-        model.setSecondaryLoader(fxmlLoader);
         model.setAddWindow(this);
 
         //Will be disabled until valid link provided, or the user can use cancel btn
@@ -83,11 +82,11 @@ public class addWindowController implements Initializable {
         addToQueue.setVisible(false);
 
         //TODO Do I need this? -- USING FOR TESTING -- WILL BE DELETED
-        final EventHandler<KeyEvent> keyEventEventHandler =
-                keyEvent -> {
-            System.out.println(rssLink.getText());
-                };
-        rssLink.addEventHandler(KeyEvent.KEY_RELEASED, keyEventEventHandler);
+//        final EventHandler<KeyEvent> keyEventEventHandler =
+//                keyEvent -> {
+//            System.out.println(rssLink.getText());
+//                };
+//        rssLink.addEventHandler(KeyEvent.KEY_RELEASED, keyEventEventHandler);
 
 
         //Hides all load options until a valid link is entered, and adjust height as well
@@ -103,7 +102,6 @@ public class addWindowController implements Initializable {
      */
     @FXML
     void confirmAction(ActionEvent event){
-        //TODO Implement
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(model.POPUP_WINDOW_PATH));
 
@@ -119,20 +117,22 @@ public class addWindowController implements Initializable {
         NodeList pubDateList = rssData.get("pubDate");
 
         System.out.println("addWindowController: building "+numToLoad+" podcast");
+        System.out.println("Titles: "+titleList.getLength());
+        System.out.println("Authors: "+authorList.getLength());
+        System.out.println("Images: "+imgList.getLength());
+        System.out.println("Durations: "+durationList.getLength());
         for(int i = 0; i<numToLoad; i++){
 
-            System.out.println("Titles: "+titleList.getLength());
-            System.out.println("Authors: "+authorList.getLength());
-            System.out.println("Images: "+imgList.getLength());
-            System.out.println("Durations: "+durationList.getLength());
 
-            Podcast temp = new Podcast(titleList.item(i+1).getTextContent(),authorList.item(i).getTextContent()
+            //TODO extra title and author, need a way to fix to allow for loading all episodes
+            Podcast temp = new Podcast(titleList.item(i+1).getTextContent(),authorList.item(i+1).getTextContent()
                     , imgList.item(0).getAttributes().getNamedItem("href").getTextContent(),
                     enclosureList.item(i), durationList.item(i).getTextContent(), pubDateList.item(i).getTextContent());
 
 
             if(autoQueue){
                 model.getQueueList().add(temp);
+                temp.setQueued(true);
             }
             model.getPodcastList().add(temp);
             System.out.println(temp.dump());
