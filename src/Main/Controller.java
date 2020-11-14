@@ -17,9 +17,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,11 +31,6 @@ public class Controller implements Initializable {
 
     private Model m = Main.model;
     private boolean isPlaying;
-
-    /**
-     * Used to store data for listView that represents the queue
-     */
-    private final ObservableList<Podcast> queueList = FXCollections.observableArrayList(Podcast.extractor);
     private ChangeListener<Podcast> podcastChangeListener;
     private Podcast selectedPodcast;
 
@@ -77,6 +74,10 @@ public class Controller implements Initializable {
     @FXML
     private TextArea noteArea;
 
+    @FXML
+    private Pane notesCover;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,6 +117,14 @@ public class Controller implements Initializable {
 
                     //Re-enable buttons if the list was previously empty
                     if(newValue != null){
+
+                        if(oldValues != null){
+                            System.err.println("Saving notes!");
+                            oldValues.setNotes(noteArea.getText());
+                        }
+
+
+                        notesCover.setVisible(false);
                         toggleBtn.setDisable(false);
                         forwardBtn.setDisable(false);
                         backBtn.setDisable(false);
@@ -125,7 +134,13 @@ public class Controller implements Initializable {
                         noteTitle.setVisible(true);
                         noteTitle.setText(selectedPodcast.getTitle()+" notes");
                         //TODO need to make listener to auto-save the text for the notes
-                        noteArea.setText(selectedPodcast.getNoteArea().getText());
+                        noteArea.setWrapText(true);
+                        noteArea.setPrefRowCount(25);
+                        if(selectedPodcast.getNotes() != null){
+                            noteArea.setText(selectedPodcast.getNotes());
+                        } else {
+                            noteArea.setText("Write your first note!");
+                        }
                         Image img = new Image(selectedPodcast.getImgPath());
                         podcastCover.setImage(img);
                         podcastCover.setPreserveRatio(true);
@@ -137,6 +152,7 @@ public class Controller implements Initializable {
                         noteTitle.setVisible(false);
                         noteArea.setText("No podcast selected!");
                         podcastCover.setVisible(false);
+                        notesCover.setVisible(true);
 
                     }
                 }));
@@ -216,9 +232,11 @@ public class Controller implements Initializable {
             img = new Image(getClass().getResource("resources/pause.png").toExternalForm());
         }
 
+        queueView.getSelectionModel().selectedItemProperty().removeListener(podcastChangeListener);
         selectedPodcast.togglePlaying();
         isPlaying = !isPlaying;
         toggleBtnIcon.setImage(img);
+        queueView.getSelectionModel().selectedItemProperty().addListener(podcastChangeListener);
 
         System.out.println("This is the toggle play/pause btn. isPlaying: "+isPlaying);
     }
@@ -245,6 +263,5 @@ public class Controller implements Initializable {
         Stage temp = (Stage) queueView.getScene().getWindow();
         temp.toFront();
     }
-
 
 }
