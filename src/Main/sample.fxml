@@ -12,51 +12,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@resources/styles/Main%20Style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller">
    <children>
-      <SplitPane dividerPositions="0.33" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane fx:id="splitPane" dividerPositions="0.35" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+          <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0" stylesheets="@resources/styles/Main%20Style.css" SplitPane.resizableWithParent="false">
                <children>
-                  <SplitPane fx:id="sidebar" dividerPositions="0.5404040404040404" orientation="VERTICAL" prefHeight="398.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane fx:id="sidebar" dividerPositions="0.5404040404040404" orientation="VERTICAL" prefHeight="398.0" prefWidth="175.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="192.0" stylesheets="@resources/styles/Main%20Style.css">
                            <children>
-                              <GridPane prefHeight="195.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
+                              <AnchorPane stylesheets="@resources/styles/Main%20Style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <AnchorPane GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-                                       <children>
-                                          <Label alignment="TOP_CENTER" layoutY="-40.0" prefHeight="20.0" prefWidth="192.0" text="My Queue" textAlignment="CENTER" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                                       </children>
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin>
-                                    </AnchorPane>
-                                    <ListView fx:id="queueView" prefHeight="163.0" prefWidth="192.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                                    <AnchorPane GridPane.rowIndex="2">
-                                       <children>
-                                          <Button mnemonicParsing="false" onAction="#addBtn" text="Add podcast" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
+                                    <Label alignment="TOP_CENTER" layoutY="-40.0" prefHeight="20.0" prefWidth="192.0" text="My Queue" textAlignment="CENTER" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                                  </children>
-                              </GridPane>
+                              </AnchorPane>
+                              <ListView fx:id="queueView" layoutX="9.0" layoutY="24.0" prefHeight="155.0" prefWidth="175.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="24.0" />
+                              <AnchorPane layoutY="186.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <Button layoutX="9.0" layoutY="-2.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="20.0" prefWidth="175.0" stylesheets="@resources/styles/Main%20Style.css" text="Add podcast" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="-2.0" />
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane id="podcastDisplay" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" stylesheets="@resources/styles/Main%20Style.css">
                            <children>
-                              <GridPane prefHeight="195.0" prefWidth="173.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <GridPane id="podcastDisplay" prefHeight="195.0" prefWidth="173.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -68,12 +53,12 @@
                                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <AnchorPane GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <AnchorPane stylesheets="@resources/styles/Main%20Style.css" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <children>
-                                          <ProgressBar fx:id="progressBar" prefHeight="9.0" prefWidth="172.0" progress="0.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <ProgressBar id="podcastProgress" fx:id="progressBar" prefHeight="9.0" prefWidth="172.0" progress="0.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
-                                    <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtn" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                    <Button fx:id="backBtn" alignment="CENTER" mnemonicParsing="false" onAction="#backBtn" stylesheets="@resources/styles/Main%20Style.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>
                                           <ImageView fx:id="rewindBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -81,7 +66,7 @@
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
-                                    <Button fx:id="toggleBtn" alignment="CENTER" mnemonicParsing="false" onAction="#toggleBtn" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                    <Button fx:id="toggleBtn" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleBtn" prefHeight="39.0" prefWidth="46.0" stylesheets="@resources/styles/Main%20Style.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>
                                           <ImageView fx:id="toggleBtnIcon" fitHeight="37.0" fitWidth="37.0" pickOnBounds="true">
                                              <image>
@@ -89,7 +74,7 @@
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
-                                    <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                    <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" stylesheets="@resources/styles/Main%20Style.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>
                                           <ImageView fx:id="forwardBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -106,41 +91,48 @@
                   </SplitPane>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0" stylesheets="@resources/styles/Main%20Style.css">
                <children>
-                  <GridPane prefHeight="400.0" prefWidth="417.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane prefHeight="400.0" prefWidth="417.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="-Infinity" minHeight="10.0" percentHeight="92.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <AnchorPane GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <AnchorPane stylesheets="@resources/styles/Main%20Style.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="libBtn" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#libBtn" prefHeight="33.0" prefWidth="55.0" text="Library">
+                              <Button fx:id="libBtn" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#libBtn" prefHeight="33.0" prefWidth="55.0" text="Library" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="2.0">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets></Button>
                               <Label fx:id="noteTitle" alignment="CENTER" layoutX="55.0" prefHeight="33.0" prefWidth="287.0" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="0.0" />
-                              <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addBtn" prefHeight="33.0" prefWidth="55.0" text="Add" AnchorPane.rightAnchor="0.0" />
+                              <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addBtn" prefHeight="33.0" prefWidth="55.0" text="Add" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
                            </children>
                         </AnchorPane>
-                        <TextArea fx:id="noteArea" prefHeight="356.0" prefWidth="399.0" GridPane.rowIndex="1">
+                        <TextArea fx:id="noteArea" prefHeight="356.0" prefWidth="399.0" stylesheets="@resources/styles/Main%20Style.css" GridPane.rowIndex="1">
                            <GridPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="2.0" />
                            </GridPane.margin></TextArea>
-                        <Pane fx:id="notesCover" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" GridPane.rowIndex="1">
+                        <AnchorPane fx:id="notesCover" prefHeight="359.0" prefWidth="403.0" stylesheets="@resources/styles/Main%20Style.css" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <children>
-                              <Label layoutX="103.0" layoutY="136.0" prefHeight="95.0" prefWidth="192.0" text="Add your first podcast to start taking notes!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Button layoutX="143.0" layoutY="219.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="27.0" prefWidth="112.0" style="-fx-border-color: transparent; -fx-background-color: #3489eb;" text="Get started!" textFill="WHITE" />
+                              <VBox alignment="CENTER" layoutY="128.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <Label id="notesCoverText" alignment="CENTER" prefHeight="55.0" prefWidth="398.0" stylesheets="@resources/styles/Main%20Style.css" text="Add your first podcast to start taking notes!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#addBtn" prefHeight="27.0" prefWidth="112.0" stylesheets="@resources/styles/Main%20Style.css" text="Get started!" textAlignment="CENTER" textFill="WHITE" />
+                                 </children>
+                              </VBox>
                            </children>
-                        </Pane>
+                           <GridPane.margin>
+                              <Insets bottom="5.0" right="5.0" />
+                           </GridPane.margin>
+                        </AnchorPane>
                      </children>
                   </GridPane>
                </children>
