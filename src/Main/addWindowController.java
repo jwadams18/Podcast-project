@@ -133,6 +133,7 @@ public class addWindowController implements Initializable {
             if(autoQueue){
                 model.getQueueList().add(temp);
                 temp.setQueued(true);
+                model.getMainWindow().setSelection();
             }
             model.getPodcastList().add(temp);
             System.out.println(temp.dump());
