@@ -2,17 +2,23 @@ package Main;
 
 import Main.Main;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import javax.tools.Tool;
 import java.io.IOException;
 
 public class LibCell extends ListCell<Podcast> {
@@ -66,9 +72,14 @@ public class LibCell extends ListCell<Podcast> {
 
     @Override
     protected void updateItem(Podcast podcast, boolean empty) {
+        boolean wasEmpty = isEmpty();
         super.updateItem(podcast, empty);
 
         this.podcast = podcast;
+
+        final ChangeListener<Boolean> changeListener =(observableValue, oldValue, newValue) -> {
+            System.out.println("["+getClass().getName()+"] The observableValue has " + "changed: oldValue = " + oldValue + ", newValue = " + newValue);
+        };
 
         if (empty || podcast == null) {
             podCastTitle.setVisible(false);
@@ -87,15 +98,26 @@ public class LibCell extends ListCell<Podcast> {
             podcastDuration.setVisible(true);
             podcastDuration.setText(podcast.getDuration());
 
+            Tooltip.install(removeBtn, new Tooltip("Click for more options"));
+
+            if(wasEmpty != empty){
+                this.podcast.hasNotesProperty().addListener(changeListener);
+                this.podcast.isQueuedProperty().addListener(changeListener);
+                queueBtn.disableProperty().bind(this.podcast.isQueuedProperty());
+                viewNotes.disableProperty().bind(this.podcast.hasNotesProperty());
+            }
+
             if(podcast.hasNotes()){
-                viewNotes.setDisable(false);
+//                viewNotes.setDisable(false);
+                Tooltip.install(viewNotes, new Tooltip("View the notes for this podcast"));
             } else {
-                //TODO make a hover message saying no notes?
-                viewNotes.setDisable(true);
+//                viewNotes.setDisable(true);
             }
 
             if(podcast.isQueued()){
-                queueBtn.setDisable(true);
+//                queueBtn.setDisable(true);
+            } else {
+                Tooltip.install(queueBtn, new Tooltip("Add this podcast to your queue!"));
             }
 
             setGraphic(container);
@@ -110,12 +132,11 @@ public class LibCell extends ListCell<Podcast> {
         //TODO if time allows set button to green on click, or check mark?
         ObservableList<Podcast> queueList = Main.model.getQueueList();
 
-        queueBtn.disableProperty().bind(this.podcast.isQueuedProperty());
+//        queueBtn.disableProperty().bind(this.podcast.isQueuedProperty());
 
         if(!queueList.contains(podcast)){
             queueList.add(podcast);
             podcast.setQueued(true);
-            queueBtn.setDisable(true);
         }
     }
 
@@ -154,7 +175,20 @@ public class LibCell extends ListCell<Podcast> {
 
     @FXML
     void viewNotes(ActionEvent event) {
-        System.out.println("View notes");
+        Parent root;
+        try {
+            //Loads library scene using library.fxml
+            root = FXMLLoader.load(getClass().getResource(Main.model.NOTES_VIEW_PATH));
+            Main.model.getNotesViewController().setPodcast(this.podcast);
+            Stage stage = new Stage();
+            stage.setTitle(this.podcast.getTitle()+" notes");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.showAndWait();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
