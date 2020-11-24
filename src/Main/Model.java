@@ -3,6 +3,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,12 +27,14 @@ public class Model {
     public final String POPUP_WINDOW_PATH = "resources/fxml/popup.fxml";
     public final String PODCAST_CELL_PATH = "resources/fxml/PodcastCell.fxml";
     public final String LIBRARY_VIEWCELL_PATH = "resources/fxml/libListViewCell.fxml";
+    public final String NOTES_VIEW_PATH = "resources/fxml/notesView.fxml";
 
 
 //    private FXMLLoader mainLoader, secondaryLoader;
     private Controller mainWindow;
     private addWindowController addWindow;
     private LibraryController libController;
+    private NotesViewController notesViewController;
 
     private HashMap<String, NodeList> mostRecentRSSData = new HashMap<>();
     private String mostRecentPodcast;
@@ -37,7 +42,7 @@ public class Model {
     private ObservableList<Podcast> podcastList = FXCollections.observableArrayList(Podcast.extractor);
     private ObservableList<Podcast> queueList = FXCollections.observableArrayList(Podcast.extractor);
 
-    public boolean loadData(String urlEntry){
+    public boolean loadData(String urlEntry) {
 
         boolean validLink = true;
 
@@ -61,21 +66,6 @@ public class Model {
 
             Document document = builder.parse(input);
             document.getDocumentElement().normalize();
-
-            //TODO START UNUSED CODE, SOON TO BE DELETED
-//            Node startingPoint = document.getFirstChild();
-//            System.out.println(startingPoint.getTextContent());
-//            while(startingPoint.getNextSibling() != null){
-//                System.out.println(startingPoint.getNodeName());
-//                startingPoint.getNextSibling();
-//            }
-//            NodeList test = document.getElementsByTagName("item");
-//            System.out.println(test.getLength());
-//            for(int i = 0; i<test.getLength(); i++){
-//                System.out.println(test.item(i).getChildNodes().item(0).getTextContent());
-//            }
-            //END UNUSED CODE
-
 
             //Gets all the data from rss feed
             titleList = document.getElementsByTagName("title");
@@ -105,59 +95,15 @@ public class Model {
         }
 
         return validLink;
-//        try{
-//
-//            mostRecentRSSData.put("title", titleList);
-////            for(int i = 0; i<titleList.getLength();i++){
-////                System.out.println(titleList.getLength()+" "+titleList.item(i).getTextContent());
-////            }
-//
-//        } catch (NullPointerException ex){
-//            System.err.println("Title not found");
-//        }
-//        try{
-//            mostRecentRSSData.put("author", authorList);
-//            System.out.println(authorList.item(0).getChildNodes().item(0).getTextContent());
-//        } catch (NullPointerException ex){
-//            System.err.println("Author not found");
-//        }
-//        try{
-//            mostRecentRSSData.put("images", imgList);
-//            System.out.println(imgList.item(0).getAttributes().getNamedItem("href").getTextContent());
-//        } catch (NullPointerException ex){
-//            System.err.println("Podcast Icon not found");
-//        }
-//        try{
-//            mostRecentRSSData.put("enclosures", enclosureList);
-//            if(enclosureList.getLength() == 0){
-//                System.err.println("No mp3 files found, please use a different link!");
-//            }
-//            for(int i = 0; i<enclosureList.getLength();i++){
-//                System.out.println(enclosureList.getLength()+" "+enclosureList.item(i).getAttributes().getNamedItem("url").getTextContent());
-//            }
-//        } catch (NullPointerException ex){
-//            System.err.println("Podcast link not found");
-//        }
-//        try{
-//            System.out.println(enclosureList.item(0).getAttributes().getNamedItem("length").getTextContent());
-//        } catch (NullPointerException ignored){}
     }
 
-//    public FXMLLoader getMainLoader() {
-//        return mainLoader;
-//    }
-//
-//    public void setMainLoader(FXMLLoader mainLoader) {
-//        this.mainLoader = mainLoader;
-//    }
-//
-//    public FXMLLoader getSecondaryLoader() {
-//        return secondaryLoader;
-//    }
-//
-//    public void setSecondaryLoader(FXMLLoader secondaryLoader) {
-//        this.secondaryLoader = secondaryLoader;
-//    }
+    /**
+     * Brings window to front if other windows have covered the main scene
+     */
+    public void setOnTop(Button object) {
+        Stage s = (Stage) object.getScene().getWindow();
+        s.toFront();
+    }
 
     public Controller getMainWindow() { return mainWindow; }
 
@@ -178,6 +124,12 @@ public class Model {
     public void setLibController(LibraryController libController) {
         this.libController = libController;
     }
+
+    public void setMostRecentNotes(NotesViewController nvc){
+        this.notesViewController = nvc;
+    }
+
+    public NotesViewController getNotesViewController() { return this.notesViewController; }
 
     public HashMap<String, NodeList> getMostRecentRSSData() {
         return mostRecentRSSData;
