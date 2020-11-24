@@ -17,6 +17,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -75,7 +76,10 @@ public class Controller implements Initializable {
     private TextArea noteArea;
 
     @FXML
-    private Pane notesCover;
+    private AnchorPane notesCover;
+
+    @FXML
+    private SplitPane splitPane;
 
 
 
@@ -95,6 +99,7 @@ public class Controller implements Initializable {
         //Sorts list based on comparator defined below
         SortedList<Podcast> sortedList = new SortedList<>(m.getQueueList());
 
+        //Defines how to sort podcast
         sortedList.setComparator((Podcast1, Podcast2) -> {
             int result = Podcast1.getAuthor().compareToIgnoreCase(Podcast2.getAuthor());
 
@@ -123,7 +128,7 @@ public class Controller implements Initializable {
                             oldValues.setNotes(noteArea.getText());
                         }
 
-
+                        //Toggles what is visible/disabled when podcast is selected
                         notesCover.setVisible(false);
                         toggleBtn.setDisable(false);
                         forwardBtn.setDisable(false);
@@ -189,17 +194,13 @@ public class Controller implements Initializable {
         //Connected to the model to get the controller of the add window to get the string entered as the "rssfeed"
         String rssFeed = m.getAddWindow().getRssFeed();
         queueView.getSelectionModel().selectFirst();
-        System.out.println("The link entered in the secondary window was: "+rssFeed);
-
-        //Will be null if addWindow is closed or cancelled
-        //TODO Is this needed?
-//        if(!rssFeed.isBlank()){
-//            System.out.println("Does this run?");
-//            buildPodcast(rssFeed, m.getAddWindow().getPodcastCount());
-//        }
-
+        System.out.println("[Controller] The link entered in the secondary window was: "+rssFeed);
     }
 
+    /**
+     * Opens the library scene on click of library button
+     * @param event
+     */
     public void libBtn(ActionEvent event){
         Parent root;
         try {
@@ -216,9 +217,14 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Toggles the playing status of the podcast
+     * @param event
+     */
     public void toggleBtn(ActionEvent event){
         Image img = null;
 
+        //Handles null case
         if(selectedPodcast == null){
             toggleBtn.setDisable(true);
             return;
@@ -226,12 +232,14 @@ public class Controller implements Initializable {
             toggleBtn.setDisable(false);
         }
 
+        //Displays correct icon based on isPlaying status
         if(isPlaying){
             img = new Image(getClass().getResource("resources/playIcon.png").toExternalForm());
         } else {
             img = new Image(getClass().getResource("resources/pause.png").toExternalForm());
         }
 
+        //Updates the listView to display the playing icon
         queueView.getSelectionModel().selectedItemProperty().removeListener(podcastChangeListener);
         selectedPodcast.togglePlaying();
         isPlaying = !isPlaying;
@@ -257,11 +265,11 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Brings window to front if other windows have covered the main scene
+     * Used when a podcast is added in an external scene
      */
-    public void setOnTop(){
-        Stage temp = (Stage) queueView.getScene().getWindow();
-        temp.toFront();
+    public void setSelection(){
+        queueView.getSelectionModel().selectFirst();
     }
+
 
 }
