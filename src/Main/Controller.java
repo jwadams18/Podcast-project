@@ -271,5 +271,13 @@ public class Controller implements Initializable {
         queueView.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Brings the queue scene to the front
+     */
+    public void setOnTop(){
+        Stage s = (Stage) backBtn.getScene().getWindow();
+        s.toFront();
+    }
+
 
 }
