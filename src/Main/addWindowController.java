@@ -109,6 +109,7 @@ public class addWindowController implements Initializable {
         boolean autoQueue = addToQueue.isSelected();
         HashMap<String, NodeList> rssData = model.getMostRecentRSSData();
 
+        //Pulls all the data from Hashmap
         NodeList titleList = rssData.get("title");
         NodeList authorList = rssData.get("author");
         NodeList imgList = rssData.get("image");
@@ -116,30 +117,34 @@ public class addWindowController implements Initializable {
         NodeList durationList = rssData.get("duration");
         NodeList pubDateList = rssData.get("pubDate");
 
-        System.out.println("addWindowController: building "+numToLoad+" podcast");
-        System.out.println("Titles: "+titleList.getLength());
-        System.out.println("Authors: "+authorList.getLength());
-        System.out.println("Images: "+imgList.getLength());
-        System.out.println("Durations: "+durationList.getLength());
-        for(int i = 0; i<numToLoad; i++){
+        //Debug messages
+        System.out.println("[AW] building "+numToLoad+" podcast");
+        System.out.println("[AW] Titles: "+titleList.getLength());
+        System.out.println("[AW] Authors: "+authorList.getLength());
+        System.out.println("[AW] Images: "+imgList.getLength());
+        System.out.println("[AW] Durations: "+durationList.getLength());
 
+        //Creates podcast using rss data
+        for(int i = 0; i<numToLoad; i++){
 
             //TODO extra title and author, need a way to fix to allow for loading all episodes
             Podcast temp = new Podcast(titleList.item(i+1).getTextContent(),authorList.item(i+1).getTextContent()
                     , imgList.item(0).getAttributes().getNamedItem("href").getTextContent(),
                     enclosureList.item(i), durationList.item(i).getTextContent(), pubDateList.item(i).getTextContent());
 
-
+            //if checkbox is selected will add to queuelist, sets the podcast to queued, finally selects podcast in listView
             if(autoQueue){
                 model.getQueueList().add(temp);
                 temp.setQueued(true);
                 model.getMainWindow().setSelection();
             }
             model.getPodcastList().add(temp);
-            System.out.println(temp.dump());
+            //Debug message to confirm correct info
+            System.out.println("[AddWindow] "+temp.dump());
         }
 
-        System.out.println(getClass().getName()+" building complete "+model.getPodcastList().size());
+        //Closes window and un-covers Library since there is now a podcast in the list
+        System.out.println("[AddWindow] building complete "+model.getPodcastList().size());
         closeAction(event);
         model.getLibController().setListVisible(true);
     }
@@ -184,18 +189,18 @@ public class addWindowController implements Initializable {
             podcastCountSpinner.setEditable(true);
 
             //TODO remove once comfortable that spinner is working right
-            podcastCountSlider.setMin(1);
-            podcastCountSlider.setMax(data.get("title").getLength() - 1);
-            podcastCountSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED,
-                    event -> {
-                        loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
-                    });
-            podcastCountSlider.addEventHandler(KeyEvent.KEY_PRESSED,
-                    event -> {
-                        loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
-                    });
-            podcastCountSlider.setValue(data.get("title").getLength() / 2);
-            loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
+//            podcastCountSlider.setMin(1);
+//            podcastCountSlider.setMax(data.get("title").getLength() - 1);
+//            podcastCountSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED,
+//                    event -> {
+//                        loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
+//                    });
+//            podcastCountSlider.addEventHandler(KeyEvent.KEY_PRESSED,
+//                    event -> {
+//                        loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
+//                    });
+//            podcastCountSlider.setValue(data.get("title").getLength() / 2);
+//            loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
             //END SLIDER CODE THAT WILL BE REMOVED
 
             //Sets the label above radio buttons to podcast linked in textbox
