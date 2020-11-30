@@ -132,11 +132,10 @@ public class LibCell extends ListCell<Podcast> {
         //TODO if time allows set button to green on click, or check mark?
         ObservableList<Podcast> queueList = Main.model.getQueueList();
 
-//        queueBtn.disableProperty().bind(this.podcast.isQueuedProperty());
-
         if(!queueList.contains(podcast)){
             queueList.add(podcast);
             podcast.setQueued(true);
+            Main.model.getMainWindow().selectPodcast(podcast);
         }
     }
 
