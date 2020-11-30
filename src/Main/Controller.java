@@ -1,11 +1,9 @@
 package Main;
 
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,13 +16,17 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
-import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 
@@ -34,6 +36,7 @@ public class Controller implements Initializable {
     private boolean isPlaying;
     private ChangeListener<Podcast> podcastChangeListener;
     private Podcast selectedPodcast;
+    private MediaPlayer player;
 
     @FXML
     //List of podcast
@@ -81,6 +84,9 @@ public class Controller implements Initializable {
     @FXML
     private SplitPane splitPane;
 
+    @FXML
+    private MediaView mediaView;
+
 
 
     @Override
@@ -114,7 +120,7 @@ public class Controller implements Initializable {
         //Listener that will update info (notes, title, podcast cover)
         queueView.getSelectionModel().selectedItemProperty().addListener(
                 podcastChangeListener = ((observableValue, oldValues, newValue) -> {
-                    System.out.println(observableValue.getValue());
+                    System.out.println("[Controller:123] "+observableValue.getValue());
                     //Need to stop playing if one is playing
                     if(oldValues != null && oldValues.isPlaying()){
                         oldValues.togglePlaying();
@@ -134,11 +140,13 @@ public class Controller implements Initializable {
                         forwardBtn.setDisable(false);
                         backBtn.setDisable(false);
 
-                        System.out.println("Selected item: "+newValue+" current progress "+newValue.getProgress());
+                        System.out.println("[Controller:143] Selected item: "+newValue+" current progress "+newValue.getProgress());
                         selectedPodcast = newValue;
+                        //Sets notes title
                         noteTitle.setVisible(true);
                         noteTitle.setText(selectedPodcast.getTitle()+" notes");
-                        //TODO need to make listener to auto-save the text for the notes
+                        //TODO need to make save button for notes
+                        //Sets notes area
                         noteArea.setWrapText(true);
                         noteArea.setPrefRowCount(25);
                         if(selectedPodcast.getNotes() != null){
@@ -146,6 +154,8 @@ public class Controller implements Initializable {
                         } else {
                             noteArea.setText("Write your first note!");
                         }
+
+                        //Sets image cover by controls
                         Image img = new Image(selectedPodcast.getImgPath());
                         podcastCover.setImage(img);
                         podcastCover.setPreserveRatio(true);
@@ -153,6 +163,24 @@ public class Controller implements Initializable {
                         podcastCover.setFitHeight(145);
                         podcastCover.setFitWidth(200);
                         podcastCover.setVisible(true);
+
+                        //Loads file into Media type to play
+                        File f =  new File("Podcast/"+selectedPodcast.getTitleStringForm()+".mp3");
+                        String path = f.getPath();
+                        Media m = new Media(new File(path).toURI().toString());
+                        player = new MediaPlayer(m);
+                        mediaView.setMediaPlayer(player);
+                        System.out.println("[Controller:173] Playing from: "+player.getStartTime());
+
+                        //Used to update the progress bars
+                        //TODO bind in podcast cell as well
+                        player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+                            @Override
+                            public void changed(ObservableValue<? extends Duration> observableValue, Duration duration, Duration newDuration) {
+                                progressBar.setProgress(newDuration.toMillis()/ m.getDuration().toMillis());
+                                System.err.println("[CL] "+newDuration.toSeconds()/ m.getDuration().toSeconds());
+                            }
+                        });
                     } else {
                         noteTitle.setVisible(false);
                         noteArea.setText("No podcast selected!");
@@ -235,8 +263,14 @@ public class Controller implements Initializable {
         //Displays correct icon based on isPlaying status
         if(isPlaying){
             img = new Image(getClass().getResource("resources/playIcon.png").toExternalForm());
+            selectedPodcast.setProgress(player.getCurrentTime());
+            //mediaView.getMediaPlayer().getMedia().getDuration()
+            System.err.println("Progress set to: "+player.getCurrentTime());
+            player.stop();
         } else {
             img = new Image(getClass().getResource("resources/pause.png").toExternalForm());
+            player.setStartTime(selectedPodcast.getProgress());
+            player.play();
         }
 
         //Updates the listView to display the playing icon
@@ -250,7 +284,19 @@ public class Controller implements Initializable {
     }
 
     public void backBtn(ActionEvent event){
+        player.stop();
+        player.seek(new Duration(player.getCurrentTime().toMillis()+10000));
+        player.play();
         System.out.println("This is the back btn");
+    }
+
+    @FXML
+    public void skipBtn(ActionEvent event){
+        System.out.println("Before skip: "+player.getCurrentTime().toMillis()+ " "+player.getStopTime().toMillis());
+        player.stop();
+        player.seek(new Duration(player.getCurrentTime().toMillis()+10000));
+        player.play();
+        System.out.println("After skip: "+player.getCurrentTime().toMillis());
     }
 
     /**
@@ -277,6 +323,11 @@ public class Controller implements Initializable {
     public void setOnTop(){
         Stage s = (Stage) backBtn.getScene().getWindow();
         s.toFront();
+        s.requestFocus();
+    }
+
+    public void selectPodcast(Podcast p){
+        queueView.getSelectionModel().select(p);
     }
 
 
