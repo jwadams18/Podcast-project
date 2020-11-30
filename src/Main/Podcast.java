@@ -5,11 +5,10 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.TextArea;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import org.w3c.dom.Node;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -23,7 +22,7 @@ public class Podcast {
     private final BooleanProperty hasNotes = new SimpleBooleanProperty(this, "hasNotes", false);
     private final BooleanProperty isQueued = new SimpleBooleanProperty(this, "isQueued", false);
     private File mediaFile = null;
-    private int  progress, maxProgress;
+    private Duration progress;
     private String imgPath, enclosurePath, duration, pubDate, notesStr;
 
     public Podcast(String Title, String Author, String imgPath, Node enclosure, String duration, String pubDate){
@@ -35,33 +34,35 @@ public class Podcast {
         this.pubDate = pubDate;
 
         this.imgPath = imgPath;
-        this.progress = 0;
+        this.progress = new Duration(0);
         this.isPlaying.set(false);
         this.hasNotes.set(false);
 
         this.enclosurePath = enclosure.getAttributes().getNamedItem("url").getTextContent();
-        this.maxProgress = Integer.parseInt(enclosure.getAttributes().getNamedItem("length").getTextContent());
+//        this.maxProgress = Integer.parseInt(enclosure.getAttributes().getNamedItem("length").getTextContent());
         download();
     }
 
     public void download() {
 
-        System.out.println("Starting download");
+        System.out.println("[Podcast:48] Starting download");
         //Creates new file using the title of the podcast, in the Podcast directory
-        this.mediaFile = new File("Podcast/"+getTitleStrForm()+".mp3");
-        File dir = new File("Podcast/");
-        System.out.println("directory " + dir.exists());
-        //If this file doesn't exist then makes file
-        //TODO handle if this podcast is already in library
-        if(!mediaFile.exists()){
-            System.err.println(this.title.get()+" making file");
+        this.mediaFile = new File("Podcast/"+ getTitleStringForm()+".mp3");
+        //Creates directory if needed
+        if(!new File("Podcast/").exists()){
+            new File("Podcast/").mkdir();
         }
+        if(this.mediaFile.exists()){
+            System.err.println("[Podcast:56] Podcast already downloaded! Skipping...");
+            return;
+        }
+
         try{
             //Uses enclosure url from rss to establish connect and attempt to download
             URL url = new URL(this.enclosurePath);
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             //Creates readers and input streams to download the file
-            System.err.println("response code: " +http.getResponseCode()+" "+getTitleStrForm());
+            System.err.println("response code: " +http.getResponseCode()+" "+ getTitleStringForm());
             //Follows redirects
             HttpURLConnection.setFollowRedirects(true);
 
@@ -90,7 +91,7 @@ public class Podcast {
             input.close();
             fileOut.close();
 
-            System.out.println("Download complete");
+            System.out.println("Download complete: "+this.mediaFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
@@ -102,8 +103,8 @@ public class Podcast {
 
     }
 
-    public String getTitleStrForm(){
-        return this.title.get().replace(':', ' ');
+    public String getTitleStringForm(){
+        return this.title.get().replace(':', '_').replace(' ', '_');
 
     }
 
@@ -128,11 +129,11 @@ public class Podcast {
         return title.get();
     }
 
-    public int getProgress() {
+    public Duration getProgress() {
         return this.progress;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(Duration progress) {
         this.progress = progress;
     }
 
@@ -143,6 +144,8 @@ public class Podcast {
     public String getDuration() { return this.duration;}
 
     public String getPubDate() { return this.pubDate; }
+
+    public File getMediaFile() { return this.mediaFile; }
 
     public boolean isPlaying() {
         return this.isPlaying.get();
@@ -189,6 +192,6 @@ public class Podcast {
             {p.titleProperty(), p.isPlayingProperty(), p.hasNotesProperty()};
 
     public String dump(){
-        return this.title.get()+" "+this.author.get()+" "+this.imgPath+" "+this.enclosurePath+" "+this.maxProgress;
+        return this.title.get()+" "+this.author.get()+" "+this.imgPath+" "+this.enclosurePath;
     }
 }
