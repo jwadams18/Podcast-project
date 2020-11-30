@@ -81,14 +81,6 @@ public class addWindowController implements Initializable {
         okBtn.setDisable(true);
         addToQueue.setVisible(false);
 
-        //TODO Do I need this? -- USING FOR TESTING -- WILL BE DELETED
-//        final EventHandler<KeyEvent> keyEventEventHandler =
-//                keyEvent -> {
-//            System.out.println(rssLink.getText());
-//                };
-//        rssLink.addEventHandler(KeyEvent.KEY_RELEASED, keyEventEventHandler);
-
-
         //Hides all load options until a valid link is entered, and adjust height as well
         loadOptions.setVisible(false);
         addWindow.setPrefHeight(PRELOAD_HEIGHT);
