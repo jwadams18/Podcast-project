@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@resources/styles/Main%20Style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.Controller">
@@ -74,7 +75,7 @@
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
-                                    <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" stylesheets="@resources/styles/Main%20Style.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                                    <Button fx:id="forwardBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#skipBtn" stylesheets="@resources/styles/Main%20Style.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>
                                           <ImageView fx:id="forwardBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -120,7 +121,7 @@
                            <children>
                               <VBox alignment="CENTER" layoutY="128.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                  <children>
-                                    <Label id="notesCoverText" alignment="CENTER" prefHeight="55.0" prefWidth="398.0" stylesheets="@resources/styles/Main%20Style.css" text="Add your first podcast to start taking notes!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                    <Label id="notesCoverText" alignment="CENTER" prefHeight="55.0" prefWidth="398.0" stylesheets="@resources/styles/Main%20Style.css" text="Add or queue your first podcast to start taking notes!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -128,6 +129,7 @@
                                     <Button alignment="CENTER" mnemonicParsing="false" onAction="#addBtn" prefHeight="27.0" prefWidth="112.0" stylesheets="@resources/styles/Main%20Style.css" text="Get started!" textAlignment="CENTER" textFill="WHITE" />
                                  </children>
                               </VBox>
+                              <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" layoutY="14.0" />
                            </children>
                            <GridPane.margin>
                               <Insets bottom="5.0" right="5.0" />
