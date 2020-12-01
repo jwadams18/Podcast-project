@@ -22,7 +22,7 @@ public class addWindowController implements Initializable {
     private Model model = Main.model;
     //Pre-determined heights to use when displaying loadOptions or not
     private final int PRELOAD_HEIGHT = 250;
-    private final int POSTLOAD_HEIGHT = 400;
+    private final int POSTLOAD_HEIGHT = 375;
     private int maxNumPodcast;
     @FXML
     private AnchorPane addWindow;
