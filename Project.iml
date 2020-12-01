@@ -8,6 +8,6 @@
     <orderEntry type="jdk" jdkName="14" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="be.ceau:podcast-parser:0.10" level="project" />
+    <orderEntry type="library" name="org.controlsfx:controlsfx:11.0.3" level="project" />
   </component>
 </module>
