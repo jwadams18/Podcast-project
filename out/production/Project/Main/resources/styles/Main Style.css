@@ -1,0 +1,59 @@
+.root, .split-pane {
+	-fx-background-color: #E5E5E5;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+	-fx-background-color: transparent;
+}
+.split-pane:vertical > .split-pane-divider {
+	-fx-background-color: transparent;
+}
+
+.list-view > .list-cell {
+	-fx-background-color: #E5E5E5;
+}
+
+.list-view > .list-cell:selected {
+	-fx-background-color: #666C6F;
+}
+
+.button {
+	-fx-background-color: #3E88A9;
+	-fx-text-fill: white;
+	-fx-border-radius: 15px;
+}
+
+.button:hover {
+	-fx-background-color: #1FBBFF;
+	-fx-text-fill: black;
+	-fx-border-radius: 15px;
+}
+
+.text-area {
+	-fx-background-color: #E5E5E5;
+	-fx-text-fill: black;
+}
+
+#forwardBtn, #toggleBtn, #backBtn {
+	-fx-background-color: #666C6F;
+}
+
+#podcastDisplay {
+	-fx-background-color: #E5E5E5;
+	-fx-border-radius: 25px;
+}
+#notesCover {
+	-fx-background-color: #EBEBEB;
+}
+
+#podcastProgress {
+	/*-fx-progress-color: #3E88A9;*/
+}
+
+#notesCoverText {
+	-fx-text-fill: black;
+}
+
+#podcastRemove {
+	-fx-background-color: transparent;
+}

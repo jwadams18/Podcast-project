@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="546.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.LibraryController">
+   <children>
+      <Label layoutX="70.0" layoutY="-1.0" prefHeight="64.0" prefWidth="760.0" text="My Library">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Button fx:id="backBtn" layoutY="-1.0" mnemonicParsing="false" onAction="#backAction" prefHeight="64.0" prefWidth="68.0" text="Back" />
+      <ListView fx:id="libraryView" layoutY="63.0" prefHeight="446.0" prefWidth="830.0" />
+      <Button fx:id="addBtn" layoutX="331.0" layoutY="509.0" mnemonicParsing="false" onAction="#addPodcast" prefHeight="25.0" prefWidth="169.0" text="Add" />
+      <AnchorPane fx:id="listCover" layoutY="64.0" prefHeight="446.0" prefWidth="830.0" style="-fx-background-color: GRAY;" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="82.0" prefHeight="125.0" prefWidth="276.0" text="Add a podcast to your library!" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="82.0">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Button fx:id="addBtn1" layoutX="331.0" layoutY="268.0" mnemonicParsing="false" onAction="#addPodcast" prefHeight="25.0" prefWidth="169.0" text="Get Started!" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

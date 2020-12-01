@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="810.0" stylesheets="@../styles/Main%20Style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="podcastCover" fitHeight="57.0" fitWidth="67.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" />
+      <Label fx:id="podCastTitle" layoutX="67.0" prefHeight="25.0" prefWidth="328.0" text="Label" AnchorPane.leftAnchor="67.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ButtonBar layoutX="376.0" prefHeight="55.0" prefWidth="270.0" AnchorPane.rightAnchor="10.0">
+        <buttons>
+            <Button fx:id="viewNotes" mnemonicParsing="false" onAction="#viewNotes" text="View Notes" />
+          <Button fx:id="queueBtn" mnemonicParsing="false" onAction="#queuePodcast" prefHeight="25.0" prefWidth="85.0" text="Queue" />
+            <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#removeAction" text="Remove" />
+        </buttons>
+      </ButtonBar>
+      <Label fx:id="podcastPubDate" layoutX="101.0" layoutY="26.0" prefHeight="31.0" prefWidth="219.0" text="Label" AnchorPane.leftAnchor="101.0" />
+      <Label fx:id="podcastDuration" layoutX="498.0" layoutY="-1.0" prefHeight="31.0" prefWidth="75.0" text="Label" AnchorPane.rightAnchor="257.0" />
+   </children>
+</AnchorPane>
