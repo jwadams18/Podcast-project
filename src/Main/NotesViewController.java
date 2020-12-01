@@ -57,13 +57,12 @@ public class NotesViewController implements Initializable {
         //Updates the notes if they editing was enabled.
         if(edited){
             this.podcast.setNotes(this.notesArea.getText());
+            model.getMainWindow().updateNotes();
         }
         Stage s = (Stage) closeBtn.getScene().getWindow();
         s.close();
         model.setOnTop(closeBtn);
     }
-
-
 
     public void setPodcast(Podcast podcast){
         this.podcast = podcast;

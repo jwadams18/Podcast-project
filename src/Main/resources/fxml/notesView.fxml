@@ -12,7 +12,6 @@
       <TextArea fx:id="notesArea" layoutY="38.0" prefHeight="336.0" prefWidth="600.0" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0" />
       <ButtonBar layoutY="373.0" prefHeight="30.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <buttons>
-          <Button fx:id="editBtn" minWidth="22.0" mnemonicParsing="false" onAction="#setEditable" prefHeight="25.0" text="Edit Notes" />
             <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeAction" text="Close" />
         </buttons>
       </ButtonBar>
