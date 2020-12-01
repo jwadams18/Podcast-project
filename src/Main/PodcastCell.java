@@ -1,7 +1,5 @@
 package Main;
 
-import Main.Main;
-import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,7 +48,6 @@ public class PodcastCell extends ListCell<Podcast>{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(model.PODCAST_CELL_PATH));
             loader.setController(this);
-//            loader.setRoot(this);
             loader.load();
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,7 +60,7 @@ public class PodcastCell extends ListCell<Podcast>{
         super.updateItem(podcast, empty);
 
         final ChangeListener<Boolean> changeListener =(observableValue, oldValue, newValue) -> {
-            System.out.println( observableValue+" The observableValue has " + "changed: oldValue = " + oldValue + ", newValue = " + newValue);
+//            System.out.println("["+getClass().getName()+" "+observableValue+" ] The observableValue has " + "changed: oldValue = " + oldValue + ", newValue = " + newValue);
         };
 
         if(empty || podcast == null) {
@@ -76,10 +73,11 @@ public class PodcastCell extends ListCell<Podcast>{
         } else {
             podcastTitle.setVisible(true);
             podcastTitle.setText(podcast.getTitle());
-            podcastProgress.setProgress(podcast.getProgress());
+//            podcastProgress.setProgress(podcast.getProgress());
             podcastProgress.setVisible(true);
 
             this.podcast = podcast;
+            this.podcast.setCellProgressBar(podcastProgress);
 
             //Watches the isPlaying/isQueued/hasNotes properties and updates the icons
             //Only adds a listener if cell was previously empty
@@ -105,6 +103,7 @@ public class PodcastCell extends ListCell<Podcast>{
     @FXML
     public void removeAction(ActionEvent event){
         if(model.getQueueList().contains(podcast)){
+            podcast.setNotes(model.getMainWindow().getNotes());
             podcast.setQueued(false);
             model.getQueueList().remove(podcast);
         }
