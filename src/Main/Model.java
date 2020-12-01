@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -29,12 +30,18 @@ public class Model {
     public final String LIBRARY_VIEWCELL_PATH = "resources/fxml/libListViewCell.fxml";
     public final String NOTES_VIEW_PATH = "resources/fxml/notesView.fxml";
 
+    public final String DEFAULT_NOTES = "Write your first notes here!";
+    public final String PODCAST_DELETE = "PODCAST DELETE";
+    public final String PODCAST_DELETE_MP3 = "DELETE MP3";
+    public final String PODCAST_DELETE_NOTES = "DELETE NOTES";
+
 
 //    private FXMLLoader mainLoader, secondaryLoader;
     private Controller mainWindow;
     private addWindowController addWindow;
     private LibraryController libController;
     private NotesViewController notesViewController;
+    private PopupController popupWindow;
 
     private HashMap<String, NodeList> mostRecentRSSData = new HashMap<>();
     private String mostRecentPodcast;
@@ -105,6 +112,11 @@ public class Model {
         s.toFront();
     }
 
+    public void deletePodcast(Podcast podcast){
+        this.queueList.remove(podcast);
+        this.podcastList.remove(podcast);
+    }
+
     public Controller getMainWindow() { return mainWindow; }
 
     public void setMainWindow(Controller mainWindow) { this.mainWindow = mainWindow; }
@@ -130,6 +142,10 @@ public class Model {
     }
 
     public NotesViewController getNotesViewController() { return this.notesViewController; }
+
+    public void setPopupWindow(PopupController pu) { this.popupWindow = pu; }
+
+    public PopupController getPopupWindow() { return this.popupWindow; }
 
     public HashMap<String, NodeList> getMostRecentRSSData() {
         return mostRecentRSSData;
