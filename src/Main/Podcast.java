@@ -47,7 +47,9 @@ public class Podcast {
 
     public void download() {
 
-        System.out.println("[Podcast:48] Starting download");
+        if(Main.model.DEBUG)
+        System.out.println("[Podcast] Starting download");
+
         //Creates new file using the title of the podcast, in the Podcast directory
         this.mediaFile = new File("Podcast/"+ getTitleStringForm()+".mp3");
         //Creates directory if needed
@@ -55,7 +57,7 @@ public class Podcast {
             new File("Podcast/").mkdir();
         }
         if(this.mediaFile.exists()){
-            System.err.println("[Podcast:56] Podcast already downloaded! Skipping...");
+            System.err.println("[Podcast] Podcast already downloaded! Skipping...");
             return;
         }
 
@@ -93,6 +95,7 @@ public class Podcast {
             input.close();
             fileOut.close();
 
+            if(Main.model.DEBUG)
             System.out.println("Download complete: "+this.mediaFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

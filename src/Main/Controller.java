@@ -120,7 +120,10 @@ public class Controller implements Initializable {
         //Listener that will update info (notes, title, podcast cover)
         queueView.getSelectionModel().selectedItemProperty().addListener(
                 podcastChangeListener = ((observableValue, oldValues, newValue) -> {
-                    System.out.println("[Controller:123] "+observableValue.getValue());
+
+                    if(model.DEBUG)
+                    System.out.println("[Controller] "+observableValue.getValue());
+
                     //Need to stop playing if one is playing
                     if(oldValues != null && oldValues.isPlaying()){
                         oldValues.togglePlaying();
@@ -131,7 +134,10 @@ public class Controller implements Initializable {
                     if(newValue != null){
 
                         if(oldValues != null){
-                            System.err.println("Saving notes!");
+
+                            if(model.DEBUG)
+                            System.err.println("[Controller] Saving notes!");
+
                             oldValues.setNotes(noteArea.getText());
                             toggleBtnIcon.setImage(new Image(getClass().getResource("resources/playIcon.png").toExternalForm()));
                         }
@@ -143,7 +149,9 @@ public class Controller implements Initializable {
                         backBtn.setDisable(false);
                         volumeSlider.setDisable(false);
 
-                        System.out.println("[Controller:143] Selected item: "+newValue+" current progress "+newValue.getProgress());
+                        if(model.DEBUG)
+                        System.out.println("[Controller] Selected item: "+newValue+" current progress "+newValue.getProgress());
+
                         selectedPodcast = newValue;
                         //Sets notes title
                         noteTitle.setVisible(true);
@@ -174,7 +182,9 @@ public class Controller implements Initializable {
                         player = new MediaPlayer(m);
                         mediaView.setMediaPlayer(player);
                         player.setVolume(1);
-                        System.out.println("[Controller:173] Playing from: "+player.getStartTime());
+
+                        if(model.DEBUG)
+                        System.out.println("[Controller] Playing from: "+player.getStartTime());
 
                         if(selectedPodcast.getMaxProgress() != null){
                             selectedPodcast.setMaxProgress(m.getDuration());
@@ -196,7 +206,7 @@ public class Controller implements Initializable {
                                     selectedPodcast.setProgress(newDuration);
                                 }
 
-                                //Debug message
+                                if(model.DEBUG)
                                 System.err.println("[CL] "+currentVal);
                             }
                         });
@@ -254,6 +264,8 @@ public class Controller implements Initializable {
         //Connected to the model to get the controller of the add window to get the string entered as the "rssfeed"
         String rssFeed = model.getAddWindow().getRssFeed();
         queueView.getSelectionModel().selectFirst();
+
+        if(model.DEBUG)
         System.out.println("[Controller] The link entered in the secondary window was: "+rssFeed);
     }
 
@@ -297,7 +309,10 @@ public class Controller implements Initializable {
             img = new Image(getClass().getResource("resources/playIcon.png").toExternalForm());
             selectedPodcast.setProgress(player.getCurrentTime());
             //mediaView.getMediaPlayer().getMedia().getDuration()
-            System.err.println("Progress set to: "+player.getCurrentTime());
+
+            if(model.DEBUG)
+            System.err.println("[Controller] Progress set to: "+player.getCurrentTime());
+
             player.stop();
         } else {
             img = new Image(getClass().getResource("resources/pause.png").toExternalForm());
@@ -312,29 +327,38 @@ public class Controller implements Initializable {
         toggleBtnIcon.setImage(img);
         queueView.getSelectionModel().selectedItemProperty().addListener(podcastChangeListener);
 
-        System.out.println("This is the toggle play/pause btn. isPlaying: "+isPlaying);
+        if(model.DEBUG)
+        System.out.println("[Controller] This is the toggle play/pause btn. isPlaying: "+isPlaying);
     }
 
     public void backBtn(ActionEvent event){
         player.stop();
         player.seek(new Duration(player.getCurrentTime().toMillis()+10000));
         player.play();
-        System.out.println("This is the back btn");
+
+        if(model.DEBUG)
+        System.out.println("[Controller] This is the back btn");
     }
 
     @FXML
     public void skipBtn(ActionEvent event){
-        System.out.println("Before skip: "+player.getCurrentTime().toMillis()+ " "+player.getStopTime().toMillis());
+        if(model.DEBUG)
+        System.out.println("[Controller]Before skip: "+player.getCurrentTime().toMillis()+ " "+player.getStopTime().toMillis());
+
         player.stop();
         player.seek(new Duration(player.getCurrentTime().toMillis()+10000));
         player.play();
-        System.out.println("After skip: "+player.getCurrentTime().toMillis());
+
+        if(model.DEBUG)
+        System.out.println("[Controller]After skip: "+player.getCurrentTime().toMillis());
     }
 
     @FXML
     void saveNotesAction(ActionEvent event) {
         selectedPodcast.setNotes(noteArea.getText().trim());
-        System.out.println("Notes saved!");
+
+        if(model.DEBUG)
+        System.out.println("[Controller] Notes saved!");
     }
 
     /**

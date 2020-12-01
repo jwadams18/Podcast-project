@@ -51,15 +51,18 @@
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
                                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <AnchorPane stylesheets="@resources/styles/Main%20Style.css" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <children>
-                                          <ProgressBar id="podcastProgress" fx:id="progressBar" prefHeight="9.0" prefWidth="172.0" progress="0.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                                          <ProgressBar id="podcastProgress" fx:id="progressBar" prefHeight="9.0" prefWidth="172.0" progress="0.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                                        </children>
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding>
                                     </AnchorPane>
                                     <Button fx:id="backBtn" alignment="CENTER" mnemonicParsing="false" onAction="#backBtn" stylesheets="@resources/styles/Main%20Style.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                                        <graphic>

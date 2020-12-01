@@ -18,7 +18,7 @@
       <ButtonBar layoutX="376.0" prefHeight="55.0" prefWidth="270.0" AnchorPane.rightAnchor="10.0">
         <buttons>
             <Button fx:id="viewNotes" mnemonicParsing="false" onAction="#viewNotes" text="View Notes" />
-          <Button fx:id="queueBtn" mnemonicParsing="false" onAction="#queuePodcast" prefHeight="25.0" prefWidth="85.0" text="Queue" />
+          <Button id="queueBtn" fx:id="queueBtn" mnemonicParsing="false" onAction="#queuePodcast" prefHeight="25.0" prefWidth="85.0" text="Queue" />
             <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#removeAction" text="Remove" />
         </buttons>
       </ButtonBar>

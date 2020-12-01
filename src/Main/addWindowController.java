@@ -68,8 +68,6 @@ public class addWindowController implements Initializable {
 
     @FXML
     private Label podcastCount;
-    //TODO make default button
-    //TODO clean up design
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -110,11 +108,14 @@ public class addWindowController implements Initializable {
         NodeList pubDateList = rssData.get("pubDate");
 
         //Debug messages
-        System.out.println("[AW] building "+numToLoad+" podcast");
-        System.out.println("[AW] Titles: "+titleList.getLength());
-        System.out.println("[AW] Authors: "+authorList.getLength());
-        System.out.println("[AW] Images: "+imgList.getLength());
-        System.out.println("[AW] Durations: "+durationList.getLength());
+        if(model.DEBUG){
+            System.out.println("[AddWindow:111] building "+numToLoad+" podcast");
+            System.out.println("[AddWindow:112] Titles: "+titleList.getLength());
+            System.out.println("[AddWindow:113] Authors: "+authorList.getLength());
+            System.out.println("[AddWindow:114] Images: "+imgList.getLength());
+            System.out.println("[AddWindow:115] Durations: "+durationList.getLength());
+        }
+
 
         //Creates podcast using rss data
         for(int i = 0; i<numToLoad; i++){
@@ -132,11 +133,12 @@ public class addWindowController implements Initializable {
             }
             model.getPodcastList().add(temp);
             //Debug message to confirm correct info
+
+            if(model.DEBUG)
             System.out.println("[AddWindow] "+temp.dump());
         }
 
         //Closes window and un-covers Library since there is now a podcast in the list
-        System.out.println("[AddWindow] building complete "+model.getPodcastList().size());
         closeAction(event);
         model.getLibController().setListVisible(true);
     }

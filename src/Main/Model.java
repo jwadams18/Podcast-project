@@ -35,6 +35,8 @@ public class Model {
     public final String PODCAST_DELETE_MP3 = "DELETE MP3";
     public final String PODCAST_DELETE_NOTES = "DELETE NOTES";
 
+    public final boolean DEBUG = false;
+
 
 //    private FXMLLoader mainLoader, secondaryLoader;
     private Controller mainWindow;
@@ -65,7 +67,9 @@ public class Model {
             URL url = new URL(urlEntry);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            System.out.println(conn.getResponseCode());
+
+            if(DEBUG)
+            System.out.println("[Model] "+conn.getResponseCode());
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -94,10 +98,10 @@ public class Model {
             input.close();
 
         } catch (ParserConfigurationException | IOException e) {
-            System.err.println("PCE/IO Exception");
+            System.err.println("[Model] PCE/IO Exception");
             validLink = false;
         } catch (SAXException e) {
-            System.err.println("SAX Exception");
+            System.err.println("[Model] SAX Exception");
             validLink = false;
         }
 
