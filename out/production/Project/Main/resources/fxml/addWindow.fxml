@@ -35,12 +35,7 @@
       </Label>
       <Pane fx:id="loadOptions" layoutX="31.0" layoutY="189.0" prefHeight="152.0" prefWidth="338.0" AnchorPane.bottomAnchor="42.0">
          <children>
-            <RadioButton fx:id="loadAll" layoutY="90.0" mnemonicParsing="false" text="RadioButton">
-               <toggleGroup>
-                  <ToggleGroup fx:id="loadOption" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="loadSome" layoutY="57.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="241.0" text="RadioButton" toggleGroup="$loadOption">
+            <RadioButton fx:id="loadSome" layoutY="57.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="241.0" text="RadioButton">
                <graphic>
                   <Pane prefHeight="22.0" prefWidth="224.0">
                      <children>
@@ -49,7 +44,10 @@
                         <Label layoutX="100.0" prefHeight="17.0" prefWidth="124.0" text="most recent episodes" />
                      </children>
                   </Pane>
-               </graphic></RadioButton>
+               </graphic>
+               <toggleGroup>
+                  <ToggleGroup fx:id="loadOption" />
+               </toggleGroup></RadioButton>
             <RadioButton fx:id="loadSingle" layoutY="35.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="173.0" selected="true" text="Load most recent episode" toggleGroup="$loadOption" />
             <Label fx:id="podcastNameDisplay" layoutY="2.0" prefHeight="25.0" prefWidth="338.0" text="Label" />
             <CheckBox fx:id="addToQueue" layoutY="130.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="99.0" text="Add to queue" />

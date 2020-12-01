@@ -173,27 +173,12 @@ public class addWindowController implements Initializable {
             addToQueue.setVisible(true);
 
             HashMap<String, NodeList> data = model.getMostRecentRSSData();
-            loadAll.setText("Load " + data.get("title").getLength() + " episode(s)");
+//            loadAll.setText("Load " + data.get("title").getLength() + " episode(s)");
 
             //Creates spinner to define the number of podcast to load
             maxNumPodcast = data.get("title").getLength();
             podcastCountSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, maxNumPodcast, maxNumPodcast / 2, 1));
             podcastCountSpinner.setEditable(true);
-
-            //TODO remove once comfortable that spinner is working right
-//            podcastCountSlider.setMin(1);
-//            podcastCountSlider.setMax(data.get("title").getLength() - 1);
-//            podcastCountSlider.addEventHandler(MouseEvent.MOUSE_DRAGGED,
-//                    event -> {
-//                        loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
-//                    });
-//            podcastCountSlider.addEventHandler(KeyEvent.KEY_PRESSED,
-//                    event -> {
-//                        loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
-//                    });
-//            podcastCountSlider.setValue(data.get("title").getLength() / 2);
-//            loadSome.setText("Load " + (int) podcastCountSlider.getValue() + " episode(s)");
-            //END SLIDER CODE THAT WILL BE REMOVED
 
             //Sets the label above radio buttons to podcast linked in textbox
             podcastNameDisplay.setText(model.getMostRecentPodcast());
