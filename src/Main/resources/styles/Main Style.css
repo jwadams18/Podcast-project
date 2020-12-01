@@ -38,6 +38,10 @@
 	-fx-background-color: #666C6F;
 }
 
+#forwardBtn:hover, #toggleBtn:hover, #backBtn:hover {
+	-fx-background-color: #9e9fad;
+}
+
 #podcastDisplay {
 	-fx-background-color: #E5E5E5;
 	-fx-border-radius: 25px;
