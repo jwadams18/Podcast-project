@@ -22,7 +22,7 @@
             <Button fx:id="removeBtn" mnemonicParsing="false" onAction="#removeAction" text="Remove" />
         </buttons>
       </ButtonBar>
-      <Label fx:id="podcastPubDate" layoutX="101.0" layoutY="26.0" prefHeight="31.0" prefWidth="219.0" text="Label" AnchorPane.leftAnchor="101.0" />
+      <Label fx:id="podcastPubDate" layoutX="102.0" layoutY="28.0" prefHeight="27.0" prefWidth="357.0" text="Label" AnchorPane.leftAnchor="102.0" />
       <Label fx:id="podcastDuration" layoutX="498.0" layoutY="-1.0" prefHeight="31.0" prefWidth="75.0" text="Label" AnchorPane.rightAnchor="257.0" />
    </children>
 </AnchorPane>

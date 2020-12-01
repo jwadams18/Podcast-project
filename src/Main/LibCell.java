@@ -49,6 +49,7 @@ public class LibCell extends ListCell<Podcast> {
 
     private Podcast podcast;
     private ContextMenu cm;
+    private Model model = Main.model;
 
     public LibCell() {
         loadFXML();
@@ -57,7 +58,7 @@ public class LibCell extends ListCell<Podcast> {
     public void loadFXML() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource(Main.model.LIBRARY_VIEWCELL_PATH));
+            loader.setLocation(getClass().getResource(model.LIBRARY_VIEWCELL_PATH));
             loader.setController(this);
             loader.load();
         } catch (IOException e) {
@@ -94,7 +95,7 @@ public class LibCell extends ListCell<Podcast> {
             podCastTitle.setText(podcast.getTitle());
             podcastCover.setImage(new Image(podcast.getImgPath()));
             podcastPubDate.setVisible(true);
-            podcastPubDate.setText(podcast.getPubDate());
+            podcastPubDate.setText("Published: "+podcast.getPubDate());
             podcastDuration.setVisible(true);
             podcastDuration.setText(podcast.getDuration());
 
@@ -108,15 +109,10 @@ public class LibCell extends ListCell<Podcast> {
             }
 
             if(podcast.hasNotes()){
-//                viewNotes.setDisable(false);
                 Tooltip.install(viewNotes, new Tooltip("View the notes for this podcast"));
-            } else {
-//                viewNotes.setDisable(true);
             }
 
-            if(podcast.isQueued()){
-//                queueBtn.setDisable(true);
-            } else {
+            if(!podcast.isQueued()){
                 Tooltip.install(queueBtn, new Tooltip("Add this podcast to your queue!"));
             }
 
@@ -128,14 +124,13 @@ public class LibCell extends ListCell<Podcast> {
 
     @FXML
     void queuePodcast(ActionEvent event) {
-        //TODO When removing a podcast from listview its not re-enabling queue btn in lib
-        //TODO if time allows set button to green on click, or check mark?
-        ObservableList<Podcast> queueList = Main.model.getQueueList();
+        //TODO hover green
+        ObservableList<Podcast> queueList = model.getQueueList();
 
         if(!queueList.contains(podcast)){
             queueList.add(podcast);
             podcast.setQueued(true);
-            Main.model.getMainWindow().selectPodcast(podcast);
+            model.getMainWindow().selectPodcast(podcast);
         }
     }
 
@@ -147,9 +142,11 @@ public class LibCell extends ListCell<Podcast> {
         MenuItem removeQueue = new MenuItem("From queue");
         removeQueue.setOnAction(this::removeFromQueue);
         MenuItem removeNotes = new MenuItem("Notes");
-        removeNotes.setOnAction(this::removeNotes);
+        removeNotes.setOnAction(this::deleteNotes);
         MenuItem deletePod = new MenuItem("Delete podcast");
         deletePod.setOnAction(this::deletePodcast);
+        MenuItem deleteMP3 = new MenuItem("Delete MP3 file");
+        deleteMP3.setOnAction(this::deletePodcastMP3);
 
         cm.getItems().clear();
 
@@ -163,7 +160,7 @@ public class LibCell extends ListCell<Podcast> {
         if(podcast.hasNotes() || podcast.isQueued()){
             cm.getItems().add(new SeparatorMenuItem());
         }
-        cm.getItems().add(deletePod);
+        cm.getItems().addAll(deleteMP3, deletePod);
 
         if(!cm.isShowing()) {
             removeBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> cm.show(removeBtn, mouseEvent.getScreenX()
@@ -177,8 +174,8 @@ public class LibCell extends ListCell<Podcast> {
         Parent root;
         try {
             //Loads library scene using library.fxml
-            root = FXMLLoader.load(getClass().getResource(Main.model.NOTES_VIEW_PATH));
-            Main.model.getNotesViewController().setPodcast(this.podcast);
+            root = FXMLLoader.load(getClass().getResource(model.NOTES_VIEW_PATH));
+            model.getNotesViewController().setPodcast(this.podcast);
             Stage stage = new Stage();
             stage.setTitle(this.podcast.getTitle()+" notes");
             stage.setScene(new Scene(root));
@@ -196,21 +193,23 @@ public class LibCell extends ListCell<Podcast> {
      * @param event
      */
     void removeFromQueue(ActionEvent event){
-        Main.model.getQueueList().remove(podcast);
-        queueBtn.setDisable(false);
+        model.getQueueList().remove(podcast);
         podcast.setQueued(false);
         cm.hide();
     }
 
-    void removeNotes(ActionEvent event){
-        System.out.println("remove notes");
-
+    void deleteNotes(ActionEvent event){
+        model.getPopupWindow().show(model.PODCAST_DELETE_NOTES, this.podcast);
         cm.hide();
     }
 
     void deletePodcast(ActionEvent event){
-        System.out.println("DELETE");
+        model.getPopupWindow().show(model.PODCAST_DELETE, this.podcast);
+        cm.hide();
+    }
 
+    void deletePodcastMP3(ActionEvent event){
+        model.getPopupWindow().show(model.PODCAST_DELETE_MP3, this.podcast);
         cm.hide();
     }
 
