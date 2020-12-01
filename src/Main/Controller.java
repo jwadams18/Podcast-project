@@ -15,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -24,15 +25,13 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 
 public class Controller implements Initializable {
 
-    private Model m = Main.model;
+    private Model model = Main.model;
     private boolean isPlaying;
     private ChangeListener<Podcast> podcastChangeListener;
     private Podcast selectedPodcast;
@@ -87,14 +86,15 @@ public class Controller implements Initializable {
     @FXML
     private MediaView mediaView;
 
-
+    @FXML
+    private Slider volumeSlider;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Loads the fxml files for sample scene
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("sample.fxml"));
-        m.setMainWindow(this);
+        model.setMainWindow(this);
 
         //Pre-loads library so the library controller can be used before viewing the library
         loadExternalScenes();
@@ -103,7 +103,7 @@ public class Controller implements Initializable {
         queueView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         //Sorts list based on comparator defined below
-        SortedList<Podcast> sortedList = new SortedList<>(m.getQueueList());
+        SortedList<Podcast> sortedList = new SortedList<>(model.getQueueList());
 
         //Defines how to sort podcast
         sortedList.setComparator((Podcast1, Podcast2) -> {
@@ -124,6 +124,7 @@ public class Controller implements Initializable {
                     //Need to stop playing if one is playing
                     if(oldValues != null && oldValues.isPlaying()){
                         oldValues.togglePlaying();
+
                     }
 
                     //Re-enable buttons if the list was previously empty
@@ -132,6 +133,7 @@ public class Controller implements Initializable {
                         if(oldValues != null){
                             System.err.println("Saving notes!");
                             oldValues.setNotes(noteArea.getText());
+                            toggleBtnIcon.setImage(new Image(getClass().getResource("resources/playIcon.png").toExternalForm()));
                         }
 
                         //Toggles what is visible/disabled when podcast is selected
@@ -139,6 +141,7 @@ public class Controller implements Initializable {
                         toggleBtn.setDisable(false);
                         forwardBtn.setDisable(false);
                         backBtn.setDisable(false);
+                        volumeSlider.setDisable(false);
 
                         System.out.println("[Controller:143] Selected item: "+newValue+" current progress "+newValue.getProgress());
                         selectedPodcast = newValue;
@@ -170,15 +173,31 @@ public class Controller implements Initializable {
                         Media m = new Media(new File(path).toURI().toString());
                         player = new MediaPlayer(m);
                         mediaView.setMediaPlayer(player);
+                        player.setVolume(1);
                         System.out.println("[Controller:173] Playing from: "+player.getStartTime());
+
+                        if(selectedPodcast.getMaxProgress() != null){
+                            selectedPodcast.setMaxProgress(m.getDuration());
+                        }
 
                         //Used to update the progress bars
                         //TODO bind in podcast cell as well
                         player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                             @Override
                             public void changed(ObservableValue<? extends Duration> observableValue, Duration duration, Duration newDuration) {
-                                progressBar.setProgress(newDuration.toMillis()/ m.getDuration().toMillis());
-                                System.err.println("[CL] "+newDuration.toSeconds()/ m.getDuration().toSeconds());
+                                double currentVal = newDuration.toMillis()/ m.getDuration().toMillis();
+                                //Keeps the progress of the current player, prevents restarting everytime
+                                if(selectedPodcast.getProgress().greaterThan(Duration.ZERO)){
+                                    progressBar.setProgress(currentVal);
+                                    selectedPodcast.getCellProgressBar().setProgress(currentVal);
+                                } else {
+                                    progressBar.setProgress(currentVal);
+                                    selectedPodcast.getCellProgressBar().setProgress(currentVal);
+                                    selectedPodcast.setProgress(newDuration);
+                                }
+
+                                //Debug message
+                                System.err.println("[CL] "+currentVal);
                             }
                         });
                     } else {
@@ -192,11 +211,24 @@ public class Controller implements Initializable {
         //Set default selection to first
         queueView.getSelectionModel().selectFirst();
 
+        /**
+         * Adds a listener to the slider that will update the player's volume
+         */
+        volumeSlider.valueProperty().addListener(event -> {
+            if(selectedPodcast != null){
+                player.setVolume(volumeSlider.getValue());
+            }
+        });
+        volumeSlider.setMax(1);
+        volumeSlider.setMin(0);
+        volumeSlider.setValue(0.5);
+
         //If list is empty then buttons will disable to prevent weird cases
         if(queueView.getSelectionModel().getSelectedItem() == null){
             toggleBtn.setDisable(true);
             forwardBtn.setDisable(true);
             backBtn.setDisable(true);
+            volumeSlider.setDisable(true);
         } else {
             toggleBtn.setDisable(false);
             forwardBtn.setDisable(false);
@@ -208,7 +240,7 @@ public class Controller implements Initializable {
         Parent root;
         try {
             //Loads pop-up window using addWindow.fxml
-            root = FXMLLoader.load(getClass().getResource(m.ADD_WINDOW_PATH));
+            root = FXMLLoader.load(getClass().getResource(model.ADD_WINDOW_PATH));
             Stage stage = new Stage();
             stage.setTitle("Add new feed");
             stage.setScene(new Scene(root));
@@ -220,7 +252,7 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         //Connected to the model to get the controller of the add window to get the string entered as the "rssfeed"
-        String rssFeed = m.getAddWindow().getRssFeed();
+        String rssFeed = model.getAddWindow().getRssFeed();
         queueView.getSelectionModel().selectFirst();
         System.out.println("[Controller] The link entered in the secondary window was: "+rssFeed);
     }
@@ -233,7 +265,7 @@ public class Controller implements Initializable {
         Parent root;
         try {
             //Loads library scene using library.fxml
-            root = FXMLLoader.load(getClass().getResource(m.LIB_WINDOW_PATH));
+            root = FXMLLoader.load(getClass().getResource(model.LIB_WINDOW_PATH));
             Stage stage = new Stage();
             stage.setTitle("My Library");
             stage.setScene(new Scene(root));
@@ -299,12 +331,19 @@ public class Controller implements Initializable {
         System.out.println("After skip: "+player.getCurrentTime().toMillis());
     }
 
+    @FXML
+    void saveNotesAction(ActionEvent event) {
+        selectedPodcast.setNotes(noteArea.getText().trim());
+        System.out.println("Notes saved!");
+    }
+
     /**
      * Used to load scenes other than the main queue scene (sample.fxml)
      */
     public void loadExternalScenes(){
         try {
-            FXMLLoader.load(getClass().getResource(m.LIB_WINDOW_PATH));
+            FXMLLoader.load(getClass().getResource(model.LIB_WINDOW_PATH));
+            FXMLLoader.load(getClass().getResource(model.POPUP_WINDOW_PATH));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -330,5 +369,13 @@ public class Controller implements Initializable {
         queueView.getSelectionModel().select(p);
     }
 
+    /**
+     * Used to update notes when changed from library-> view notes button
+     */
+    public void updateNotes(){
+        noteArea.setText(selectedPodcast.getNotes());
+    }
+
+    public String getNotes() { return this.noteArea.getText().trim(); }
 
 }

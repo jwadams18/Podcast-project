@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
@@ -52,6 +53,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
                                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <AnchorPane stylesheets="@resources/styles/Main%20Style.css" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -83,7 +85,23 @@
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
-                                    <ImageView fx:id="podcastCover" fitHeight="109.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <ImageView fx:id="podcastCover" fitHeight="78.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
+                                    <AnchorPane prefHeight="15.0" prefWidth="204.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
+                                       <children>
+                                          <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="174.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="15.0">
+                                             <image>
+                                                <Image url="@resources/volume.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="12.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="12.0">
+                                             <image>
+                                                <Image url="@resources/no-sound.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Slider fx:id="volumeSlider" layoutX="38.0" layoutY="7.0" prefHeight="14.0" prefWidth="129.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="37.0" />
+                                       </children>
+                                    </AnchorPane>
                                  </children>
                               </GridPane>
                            </children>
@@ -113,10 +131,15 @@
                               <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addBtn" prefHeight="33.0" prefWidth="55.0" text="Add" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" />
                            </children>
                         </AnchorPane>
-                        <TextArea fx:id="noteArea" prefHeight="356.0" prefWidth="399.0" stylesheets="@resources/styles/Main%20Style.css" GridPane.rowIndex="1">
+                        <AnchorPane GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="2.0" />
-                           </GridPane.margin></TextArea>
+                           </GridPane.margin>
+                           <children>
+                              <TextArea fx:id="noteArea" prefHeight="324.0" prefWidth="375.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0" />
+                              <Button fx:id="saveNotes" layoutX="1.0" layoutY="324.0" mnemonicParsing="false" onAction="#saveNotesAction" prefHeight="25.0" prefWidth="375.0" text="Save Notes" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
                         <AnchorPane fx:id="notesCover" prefHeight="359.0" prefWidth="403.0" stylesheets="@resources/styles/Main%20Style.css" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <children>
                               <VBox alignment="CENTER" layoutY="128.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
