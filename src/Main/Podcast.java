@@ -5,6 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.ProgressBar;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import org.w3c.dom.Node;
@@ -22,7 +23,8 @@ public class Podcast {
     private final BooleanProperty hasNotes = new SimpleBooleanProperty(this, "hasNotes", false);
     private final BooleanProperty isQueued = new SimpleBooleanProperty(this, "isQueued", false);
     private File mediaFile = null;
-    private Duration progress;
+    private Duration progress, maxProgress;
+    private ProgressBar cellProgressBar;
     private String imgPath, enclosurePath, duration, pubDate, notesStr;
 
     public Podcast(String Title, String Author, String imgPath, Node enclosure, String duration, String pubDate){
@@ -83,7 +85,7 @@ public class Podcast {
                 downloaded += read;
                 percentDownloaded = (downloaded*100)/fileSize;
                 String percent = String.format("%.4f %s", percentDownloaded,"%");
-//                System.out.println("Downloaded "+percent+" of "+this.title.get());
+                System.out.println("Downloaded "+percent+" of "+this.title.get());
 
             }
 
@@ -101,6 +103,10 @@ public class Podcast {
         }
 
 
+    }
+
+    public void deleteMP3(){
+        this.mediaFile.delete();
     }
 
     public String getTitleStringForm(){
@@ -121,6 +127,24 @@ public class Podcast {
         this.notesStr = notes;
     }
 
+    public void setProgress(Duration progress) {
+        this.progress = progress;
+    }
+
+    public void setCellProgressBar(ProgressBar pb){
+        this.cellProgressBar = pb;
+    }
+
+    public void setMaxProgress(Duration maxProgress){
+        this.maxProgress = maxProgress;
+    }
+
+    public Duration getMaxProgress(){
+        return this.maxProgress;
+    }
+
+    public ProgressBar getCellProgressBar(){ return this.cellProgressBar;}
+
     public String getAuthor() {
         return author.get();
     }
@@ -131,10 +155,6 @@ public class Podcast {
 
     public Duration getProgress() {
         return this.progress;
-    }
-
-    public void setProgress(Duration progress) {
-        this.progress = progress;
     }
 
     public String getImgPath() {
