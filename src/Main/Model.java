@@ -29,6 +29,7 @@ public class Model {
     public final String PODCAST_CELL_PATH = "resources/fxml/PodcastCell.fxml";
     public final String LIBRARY_VIEWCELL_PATH = "resources/fxml/libListViewCell.fxml";
     public final String NOTES_VIEW_PATH = "resources/fxml/notesView.fxml";
+    public final String COMPLETION_WINDOW_PATH = "resources/fxml/podcastCompletionPopup.fxml";
 
     public final String DEFAULT_NOTES = "Write your first notes here!";
     public final String PODCAST_DELETE = "PODCAST DELETE";

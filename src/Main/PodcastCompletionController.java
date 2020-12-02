@@ -25,6 +25,10 @@ public class PodcastCompletionController implements Initializable {
     if this podcast is complete
     then display this popup
      */
+        Main.model.setPodcastCompletionController(this);
+        if(this.podcast.getDuration().equals(model.getMainWindow().getPlayer().getTotalDuration())) {
+
+        }
     }
     @FXML
     public void addBackToLibrary(ActionEvent event) {
@@ -41,5 +45,7 @@ public class PodcastCompletionController implements Initializable {
     add podcast to bottom of queue
      */
     }
+
+
 
 }

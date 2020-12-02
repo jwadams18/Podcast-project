@@ -35,6 +35,7 @@ public class Controller implements Initializable {
     private boolean isPlaying;
     private ChangeListener<Podcast> podcastChangeListener;
     private Podcast selectedPodcast;
+
     private MediaPlayer player;
 
     @FXML
@@ -401,5 +402,14 @@ public class Controller implements Initializable {
     }
 
     public String getNotes() { return this.noteArea.getText().trim(); }
+
+    // new
+    public MediaPlayer getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(MediaPlayer player) {
+        this.player = player;
+    }
 
 }
