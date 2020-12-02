@@ -44,6 +44,8 @@ public class Model {
     private LibraryController libController;
     private NotesViewController notesViewController;
     private PopupController popupWindow;
+    private PodcastCompletionController podcastCompletionController;
+
 
     private HashMap<String, NodeList> mostRecentRSSData = new HashMap<>();
     private String mostRecentPodcast;
@@ -167,4 +169,12 @@ public class Model {
         return queueList;
     }
 
+
+    public void setPodcastCompletionController(PodcastCompletionController podcastCompletionController) {
+        this.podcastCompletionController = podcastCompletionController;
+    }
+
+    public PodcastCompletionController getPodcastCompletionController() {
+        return podcastCompletionController;
+    }
 }
