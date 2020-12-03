@@ -68,7 +68,7 @@
                                        <graphic>
                                           <ImageView fx:id="rewindBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@resources/rewindIcon.png" />
+                                                <Image url="@resources/back.png" />
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
@@ -84,7 +84,7 @@
                                        <graphic>
                                           <ImageView fx:id="forwardBtnIcon" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@resources/fastforwardIcon.png" />
+                                                <Image url="@resources/forward.png" />
                                              </image>
                                           </ImageView>
                                        </graphic></Button>
