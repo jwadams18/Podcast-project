@@ -33,11 +33,6 @@
 	-fx-background-color: #E5E5E5;
 	-fx-text-fill: black;
 }
-
-#forwardBtn, #toggleBtn, #backBtn {
-	-fx-background-color: #666C6F;
-}
-
 #podcastDisplay {
 	-fx-background-color: #E5E5E5;
 	-fx-border-radius: 25px;
