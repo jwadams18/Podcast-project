@@ -167,6 +167,7 @@ public class addWindowController implements Initializable {
 
         if(validLink) {
             //Modifies scene for loading options
+            searchBtn.setDisable(true);
             okBtn.setDisable(false);
             searchBtn.setDefaultButton(false);
             okBtn.setDefaultButton(true);
