@@ -127,7 +127,7 @@ public class Controller implements Initializable {
                     //Need to stop playing if one is playing
                     if(oldValues != null && oldValues.isPlaying()){
                         oldValues.togglePlaying();
-
+                        isPlaying = false;
                     }
 
                     //Re-enable buttons if the list was previously empty
@@ -206,8 +206,8 @@ public class Controller implements Initializable {
                                     selectedPodcast.setProgress(newDuration);
                                 }
 
-                                if(model.DEBUG)
-                                System.err.println("[CL] "+currentVal);
+                                if(model.DEBUG);
+//                                System.err.println("[CL] "+currentVal);
                             }
                         });
                     } else {
@@ -255,6 +255,7 @@ public class Controller implements Initializable {
             stage.setTitle("Add new feed");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("resources/musicnote.png")));
             stage.showAndWait();
 
         }
@@ -282,6 +283,7 @@ public class Controller implements Initializable {
             stage.setTitle("My Library");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("resources/musicnote.png")));
             stage.showAndWait();
         }
         catch (IOException e) {
@@ -332,22 +334,19 @@ public class Controller implements Initializable {
     }
 
     public void backBtn(ActionEvent event){
-        player.stop();
-        player.seek(new Duration(player.getCurrentTime().toMillis()+10000));
-        player.play();
 
-        if(model.DEBUG)
-        System.out.println("[Controller] This is the back btn");
+        player.seek(player.getCurrentTime().subtract(Duration.seconds(10)));
+        selectedPodcast.setProgress(player.getCurrentTime());
+
     }
 
     @FXML
     public void skipBtn(ActionEvent event){
         if(model.DEBUG)
-        System.out.println("[Controller]Before skip: "+player.getCurrentTime().toMillis()+ " "+player.getStopTime().toMillis());
+        System.out.println("[Controller]Before skip: "+player.getCurrentTime().toMillis());
 
-        player.stop();
-        player.seek(new Duration(player.getCurrentTime().toMillis()+10000));
-        player.play();
+        player.seek(player.getCurrentTime().add(Duration.seconds(10)));
+        selectedPodcast.setProgress(player.getCurrentTime());
 
         if(model.DEBUG)
         System.out.println("[Controller]After skip: "+player.getCurrentTime().toMillis());
@@ -356,6 +355,7 @@ public class Controller implements Initializable {
     @FXML
     void saveNotesAction(ActionEvent event) {
         selectedPodcast.setNotes(noteArea.getText().trim());
+        selectedPodcast.setNotesStatus(true);
 
         if(model.DEBUG)
         System.out.println("[Controller] Notes saved!");
