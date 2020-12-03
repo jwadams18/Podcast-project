@@ -1,17 +1,13 @@
 package Main;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import javax.swing.*;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,7 +31,7 @@ public class Model {
     public final String PODCAST_DELETE_MP3 = "DELETE MP3";
     public final String PODCAST_DELETE_NOTES = "DELETE NOTES";
 
-    public final boolean DEBUG = false;
+    public final boolean DEBUG = true;
 
 
 //    private FXMLLoader mainLoader, secondaryLoader;
