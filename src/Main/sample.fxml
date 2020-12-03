@@ -147,7 +147,7 @@
                            <children>
                               <VBox alignment="CENTER" layoutY="128.0" stylesheets="@resources/styles/Main%20Style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                  <children>
-                                    <Label id="notesCoverText" alignment="CENTER" prefHeight="55.0" prefWidth="398.0" stylesheets="@resources/styles/Main%20Style.css" text="Add or queue your first podcast to start taking notes!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                    <Label id="notesCoverText" alignment="CENTER" prefHeight="55.0" prefWidth="398.0" stylesheets="@resources/styles/Main%20Style.css" text="Add your first podcast to start taking notes!" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
