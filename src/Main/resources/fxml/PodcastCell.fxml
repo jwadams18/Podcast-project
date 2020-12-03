@@ -8,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <javafx.scene.control.ListCell prefHeight="40.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
@@ -18,10 +19,13 @@
                   <Image url="@../speaker.png" />
                </image>
             </ImageView>
-            <Label fx:id="podcastTitle" layoutX="5.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="134.0" text="Label" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="55.0">
+            <Label fx:id="podcastTitle" layoutX="5.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="134.0" text="Label" wrapText="true" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="55.0">
                <opaqueInsets>
                   <Insets left="10.0" />
                </opaqueInsets>
+               <font>
+                  <Font size="11.0" />
+               </font>
             </Label>
             <ImageView fx:id="hasNotes" disable="true" fitHeight="28.0" fitWidth="28.0" layoutX="166.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="29.0">
                <image>
