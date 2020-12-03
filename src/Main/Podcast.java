@@ -41,7 +41,6 @@ public class Podcast {
         this.hasNotes.set(false);
 
         this.enclosurePath = enclosure.getAttributes().getNamedItem("url").getTextContent();
-//        this.maxProgress = Integer.parseInt(enclosure.getAttributes().getNamedItem("length").getTextContent());
         download();
     }
 
@@ -142,6 +141,8 @@ public class Podcast {
         this.maxProgress = maxProgress;
     }
 
+    public void setNotesStatus(boolean value) { this.hasNotesProperty().set(value); }
+
     public Duration getMaxProgress(){
         return this.maxProgress;
     }
@@ -168,8 +169,6 @@ public class Podcast {
 
     public String getPubDate() { return this.pubDate; }
 
-    public File getMediaFile() { return this.mediaFile; }
-
     public boolean isPlaying() {
         return this.isPlaying.get();
     }
@@ -193,6 +192,10 @@ public class Podcast {
                 && !notesStr.isBlank();
 
         return false;
+    }
+
+    public boolean isDownloaded(){
+        return this.mediaFile.exists();
     }
 
     public StringProperty titleProperty(){
