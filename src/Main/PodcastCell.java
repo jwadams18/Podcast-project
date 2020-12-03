@@ -13,7 +13,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
-
+/**
+ * @author jwadams18
+ * NoteCast! - PodcastPlayer
+ * CS*350 Human Computer Interaction
+ */
 public class PodcastCell extends ListCell<Podcast>{
 
     private Model model = Main.model;
@@ -38,7 +42,9 @@ public class PodcastCell extends ListCell<Podcast>{
 
     private Podcast podcast;
 
-
+    /**
+     * This cell will be displayed in the ListView that represents the Queued podcast list
+     */
     public PodcastCell(){
         loadFXML();
     }
@@ -54,6 +60,11 @@ public class PodcastCell extends ListCell<Podcast>{
         }
     }
 
+    /**
+     * Maintains the data in the list cell
+     * @param podcast the podcast that will supply the data to be displayed
+     * @param empty
+     */
     @Override
     protected void updateItem(Podcast podcast, boolean empty) {
         boolean wasEmpty = isEmpty();
@@ -63,6 +74,7 @@ public class PodcastCell extends ListCell<Podcast>{
 //            System.out.println("["+getClass().getName()+" "+observableValue+" ] The observableValue has " + "changed: oldValue = " + oldValue + ", newValue = " + newValue);
         };
 
+        //Hides controls that would have nothing to display
         if(empty || podcast == null) {
             podcastTitle.setVisible(false);
             podcastProgress.setVisible(false);
@@ -86,6 +98,8 @@ public class PodcastCell extends ListCell<Podcast>{
                 this.podcast.hasNotesProperty().addListener(changeListener);
                 this.podcast.isQueuedProperty().addListener(changeListener);
             }
+
+            //Toggles visibility settings based on properties of podcast
             if(podcast.hasNotes()){
                 hasNotes.setVisible(true);
             } else {
@@ -100,6 +114,11 @@ public class PodcastCell extends ListCell<Podcast>{
         }
 
     }
+
+    /**
+     * ActionListener for the button in the ListView, will remove podcast from the queued list
+     * @param event
+     */
     @FXML
     public void removeAction(ActionEvent event){
         if(model.getQueueList().contains(podcast)){

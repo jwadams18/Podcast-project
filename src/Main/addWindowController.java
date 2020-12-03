@@ -1,13 +1,10 @@
 package Main;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -17,6 +14,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * @author jwadams18
+ * NoteCast! - PodcastPlayer
+ * CS*350 Human Computer Interaction
+ */
 public class addWindowController implements Initializable {
 
     private Model model = Main.model;
@@ -73,7 +75,7 @@ public class addWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(model.ADD_WINDOW_PATH));
-        model.setAddWindow(this);
+        model.setAddWindow(this); //Used to get back to this controller if needed
 
         //Will be disabled until valid link provided, or the user can use cancel btn
         okBtn.setDisable(true);
@@ -92,12 +94,10 @@ public class addWindowController implements Initializable {
      */
     @FXML
     void confirmAction(ActionEvent event){
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource(model.POPUP_WINDOW_PATH));
-
+        //Gets settings from raddioButtons and checkbox for "auto-queue"
         int numToLoad = getPodcastCount();
         boolean autoQueue = addToQueue.isSelected();
-        HashMap<String, NodeList> rssData = model.getMostRecentRSSData();
+        HashMap<String, NodeList> rssData = model.getMostRecentRSSData(); //Gets all loaded data from RSS
 
         //Pulls all the data from Hashmap
         NodeList titleList = rssData.get("title");
@@ -120,7 +120,6 @@ public class addWindowController implements Initializable {
         //Creates podcast using rss data
         for(int i = 0; i<numToLoad; i++){
 
-            //TODO extra title and author, need a way to fix to allow for loading all episodes
             Podcast temp = new Podcast(titleList.item(i+1).getTextContent(),authorList.item(i+1).getTextContent()
                     , imgList.item(0).getAttributes().getNamedItem("href").getTextContent(),
                     enclosureList.item(i), durationList.item(i).getTextContent(), pubDateList.item(i).getTextContent());
@@ -131,9 +130,11 @@ public class addWindowController implements Initializable {
                 temp.setQueued(true);
                 model.getMainWindow().setSelection();
             }
-            model.getPodcastList().add(temp);
-            //Debug message to confirm correct info
+            //Prevents duplicate podcast
+            if(!model.getPodcastList().contains(temp))
+                model.getPodcastList().add(temp);
 
+            //Debug message to confirm correct info
             if(model.DEBUG)
             System.out.println("[AddWindow] "+temp.dump());
         }
@@ -164,9 +165,9 @@ public class addWindowController implements Initializable {
 
         boolean validLink = model.loadData(rssLink.getText());
 
-
+        //validLink = true if no errors where thrown when "searching" for link
         if(validLink) {
-            //Modifies scene for loading options
+            //Modifies scene for loading options, re-enables buttons that were disabled
             searchBtn.setDisable(true);
             okBtn.setDisable(false);
             searchBtn.setDefaultButton(false);
@@ -187,7 +188,7 @@ public class addWindowController implements Initializable {
             podcastNameDisplay.setText(model.getMostRecentPodcast());
         } else {
             //Basic link correction
-            //TODO Change to shake with red-outline if time allows for design
+            //TODO Change to shake with red-outline if time allows
             if(!(rssLink.getText().startsWith("https://") || rssLink.getText().startsWith("http://"))){
                 rssLink.setText("https://"+rssLink.getText());
             }

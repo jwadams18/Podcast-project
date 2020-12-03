@@ -28,7 +28,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * @author jwadams18
+ * NoteCast! - PodcastPlayer
+ * CS*350 Human Computer Interaction
+ */
 public class Controller implements Initializable {
 
     private Model model = Main.model;
@@ -92,7 +96,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Loads the fxml files for sample scene
+        //Loads the fxml files for sample scene, sets controller in model
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("sample.fxml"));
         model.setMainWindow(this);
@@ -134,6 +138,7 @@ public class Controller implements Initializable {
                     //Re-enable buttons if the list was previously empty
                     if(newValue != null){
 
+                        //If there was a previously selected podcast this will run
                         if(oldValues != null){
 
                             if(model.DEBUG)
@@ -187,6 +192,7 @@ public class Controller implements Initializable {
                         if(model.DEBUG)
                         System.out.println("[Controller] Playing from: "+player.getStartTime());
 
+                        //Updates the max progress of the podcast if not previously set
                         if(selectedPodcast.getMaxProgress() != null){
                             selectedPodcast.setMaxProgress(m.getDuration());
                         }
@@ -212,6 +218,7 @@ public class Controller implements Initializable {
                             }
                         });
                     } else {
+                        //Settings if podcast is null
                         noteTitle.setVisible(false);
                         noteArea.setText("No podcast selected!");
                         podcastCover.setVisible(false);
@@ -222,9 +229,7 @@ public class Controller implements Initializable {
         //Set default selection to first
         queueView.getSelectionModel().selectFirst();
 
-        /**
-         * Adds a listener to the slider that will update the player's volume
-         */
+        //Adds listener to slider to maintain volume controls
         volumeSlider.valueProperty().addListener(event -> {
             if(selectedPodcast != null){
                 player.setVolume(volumeSlider.getValue());
@@ -247,6 +252,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Displays the pop-up window that prompts the user for an RSS feed
+     * @param event
+     */
     public void addBtn(ActionEvent event) {
         Parent root;
         try {
@@ -299,7 +308,7 @@ public class Controller implements Initializable {
     public void toggleBtn(ActionEvent event){
         Image img = null;
 
-        //Handles null case
+        //Handles null case, which disables button, usually used when no podcast is selected
         if(selectedPodcast == null){
             toggleBtn.setDisable(true);
             return;
@@ -318,6 +327,7 @@ public class Controller implements Initializable {
 
             player.stop();
         } else {
+            //Updates icon from play icon to pause icon, and starts player where is was stopped
             img = new Image(getClass().getResource("resources/pause.png").toExternalForm());
             player.setStartTime(selectedPodcast.getProgress());
             player.play();
@@ -334,6 +344,10 @@ public class Controller implements Initializable {
         System.out.println("[Controller] This is the toggle play/pause btn. isPlaying: "+isPlaying);
     }
 
+    /**
+     * Skips back 10 seconds for the current podcast, updates for current podcast
+     * @param event
+     */
     public void backBtn(ActionEvent event){
 
         player.seek(player.getCurrentTime().subtract(Duration.seconds(10)));
@@ -341,6 +355,10 @@ public class Controller implements Initializable {
 
     }
 
+    /**
+     * Skips forward 10 seconds for the current podcast, updates
+     * @param event
+     */
     @FXML
     public void skipBtn(ActionEvent event){
         if(model.DEBUG)
@@ -353,6 +371,11 @@ public class Controller implements Initializable {
         System.out.println("[Controller]After skip: "+player.getCurrentTime().toMillis());
     }
 
+    /**
+     * Force saves the notes, via a button on interface, also updates property in podcast
+     * potentially triggering icon display
+     * @param event
+     */
     @FXML
     void saveNotesAction(ActionEvent event) {
         selectedPodcast.setNotes(noteArea.getText().trim());

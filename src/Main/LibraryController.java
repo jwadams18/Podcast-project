@@ -21,6 +21,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author jwadams18
+ * NoteCast! - PodcastPlayer
+ * CS*350 Human Computer Interaction
+ */
 public class LibraryController implements Initializable {
 
     private Model model = Main.model;
@@ -67,7 +72,7 @@ public class LibraryController implements Initializable {
 
         libraryView.setItems(sortedList);
 
-
+        //If the library is empty an AnchorPane will cover prompting the user what to do
         if(libraryView.getItems().size() == 0){
             listCover.setVisible(true);
             addBtn.setVisible(false);
@@ -79,6 +84,10 @@ public class LibraryController implements Initializable {
 
     }
 
+    /**
+     * Brings up addWindow to prompt user for RSS link
+     * @param event
+     */
     @FXML
     public void addPodcast(ActionEvent event) {
         Parent root;
@@ -97,12 +106,16 @@ public class LibraryController implements Initializable {
         }
     }
 
+    /**
+     * Closes the library window and brings the queue scene back to the top window
+     * @param event
+     */
     @FXML
     public void backAction(ActionEvent event) {
         Stage stage = (Stage) backBtn.getScene().getWindow();
         stage.close();
         model.getMainWindow().setOnTop();
-        //TODO when closed bring queue back to the front
+
     }
 
     /**

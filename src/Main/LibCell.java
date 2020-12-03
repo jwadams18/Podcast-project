@@ -1,11 +1,8 @@
 package Main;
 
-import Main.Main;
-import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,9 +15,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import javax.tools.Tool;
 import java.io.IOException;
-
+/**
+ * @author jwadams18
+ * NoteCast! - PodcastPlayer
+ * CS*350 Human Computer Interaction
+ */
 public class LibCell extends ListCell<Podcast> {
 
     @FXML
@@ -72,13 +72,20 @@ public class LibCell extends ListCell<Podcast> {
         cm = new ContextMenu();
     }
 
+    /**
+     * Updates the controls in the cell that is displayed in the library scene
+     * @param podcast podcast that is being displayed by this cell
+     * @param empty
+     */
     @Override
     protected void updateItem(Podcast podcast, boolean empty) {
         boolean wasEmpty = isEmpty();
         super.updateItem(podcast, empty);
 
+        //Stores the podcast so it can be used later
         this.podcast = podcast;
 
+        //Will be used to monitor settings to display icons etc.
         final ChangeListener<Boolean> changeListener =(observableValue, oldValue, newValue) -> {
             if(model.DEBUG)
             System.out.println("["+getClass().getName()+"] The observableValue has " + "changed: oldValue = " + oldValue + ", newValue = " + newValue);
@@ -94,11 +101,13 @@ public class LibCell extends ListCell<Podcast> {
             setGraphic(temp);
         } else {
 
+            //Checks if the file is downloaded to the directory
             if(!this.podcast.isDownloaded()){
                 queueBtn.setText("Download & Queue");
                 queueBtn.setWrapText(true);
             }
 
+            //Fills in the information of the podcast into the cell
             podCastTitle.setVisible(true);
             podCastTitle.setText(podcast.getTitle());
             podcastCover.setImage(new Image(podcast.getImgPath()));
@@ -107,8 +116,11 @@ public class LibCell extends ListCell<Podcast> {
             podcastDuration.setVisible(true);
             podcastDuration.setText(podcast.getDuration());
 
+            //Adds tooltip to remove button
             Tooltip.install(removeBtn, new Tooltip("Click for more options"));
 
+            //If this cell was just added, assign listeners
+            //Only done once to prevent wasted resources
             if(wasEmpty != empty){
                 this.podcast.hasNotesProperty().addListener(changeListener);
                 this.podcast.isQueuedProperty().addListener(changeListener);
@@ -116,6 +128,12 @@ public class LibCell extends ListCell<Podcast> {
                 viewNotes.disableProperty().bind(this.podcast.hasNotesProperty());
             }
 
+            /*
+
+            Following if statements adds tooltips based on properties
+            of the podcast being displayed
+
+             */
             if(podcast.hasNotes()){
                 Tooltip.install(viewNotes, new Tooltip("View the notes for this podcast"));
             }
@@ -138,10 +156,12 @@ public class LibCell extends ListCell<Podcast> {
     void queuePodcast(ActionEvent event) {
         ObservableList<Podcast> queueList = model.getQueueList();
 
+        //If the MP3 was deleted, redownloads
         if(!this.podcast.isDownloaded()){
             this.podcast.download();
         }
 
+        //If the podcast isn't in the queue then add
         if(!queueList.contains(podcast)){
             queueList.add(podcast);
             podcast.setQueued(true);
@@ -158,6 +178,7 @@ public class LibCell extends ListCell<Podcast> {
 
         cm.setAutoHide(true);
 
+        //Creates menuItems and adds listeners
         MenuItem removeQueue = new MenuItem("From queue");
         removeQueue.setOnAction(this::removeFromQueue);
         MenuItem removeNotes = new MenuItem("Notes");
@@ -167,6 +188,7 @@ public class LibCell extends ListCell<Podcast> {
         MenuItem deleteMP3 = new MenuItem("Delete MP3 file");
         deleteMP3.setOnAction(this::deletePodcastMP3);
 
+        //Removes all previous options from contextMenu
         cm.getItems().clear();
 
         //Based on the properties of the podcast will determine which options pop-up

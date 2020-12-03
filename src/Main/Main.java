@@ -6,9 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
+/**
+ * @author jwadams18
+ * NoteCast! - PodcastPlayer
+ * CS*350 Human Computer Interaction
+ */
 public class Main extends Application {
 
+    //Used to connect secondary files together using Model-View-Controller (MVC) practices
     public static final Model model = new Model();
     @Override
     public void start(Stage primaryStage) throws Exception{

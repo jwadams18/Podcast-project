@@ -16,9 +16,14 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-
+/**
+ * @author jwadams18
+ * NoteCast! - PodcastPlayer
+ * CS*350 Human Computer Interaction
+ */
 public class Model {
 
+    //Global constants to reduce point of maintenance if fxml files are moved
     public final String ADD_WINDOW_PATH = "resources/fxml/addWindow.fxml";
     public final String LIB_WINDOW_PATH = "resources/fxml/library.fxml";
     public final String POPUP_WINDOW_PATH = "resources/fxml/popup.fxml";
@@ -27,29 +32,33 @@ public class Model {
     public final String NOTES_VIEW_PATH = "resources/fxml/notesView.fxml";
     public final String COMPLETION_WINDOW_PATH = "resources/fxml/podcastCompletionPopup.fxml";
 
+    //Used to ensure that the "default notes" were constant across app
     public final String DEFAULT_NOTES = "Write your first notes here!";
-    public final String PODCAST_DELETE = "PODCAST DELETE";
-    public final String PODCAST_DELETE_MP3 = "DELETE MP3";
-    public final String PODCAST_DELETE_NOTES = "DELETE NOTES";
 
+    //Option to display more info to the console
     public final boolean DEBUG = true;
 
 
-//    private FXMLLoader mainLoader, secondaryLoader;
+//  Connects the controllers so data can be parsed around
     private Controller mainWindow;
     private addWindowController addWindow;
     private LibraryController libController;
     private NotesViewController notesViewController;
-    private PopupController popupWindow;
     private PodcastCompletionController podcastCompletionController;
 
 
+    //HashMap used to store data from most recent pull form RSS link
     private HashMap<String, NodeList> mostRecentRSSData = new HashMap<>();
     private String mostRecentPodcast;
 
     private ObservableList<Podcast> podcastList = FXCollections.observableArrayList(Podcast.extractor);
     private ObservableList<Podcast> queueList = FXCollections.observableArrayList(Podcast.extractor);
 
+    /**
+     * Given a string representing a URL, this method will attempt to create a connection then get the information from this URL
+     * @param urlEntry string representing a url to a podcast's RSS feed
+     * @return if this process was successful
+     */
     public boolean loadData(String urlEntry) {
 
         boolean validLink = true;
@@ -65,11 +74,13 @@ public class Model {
         try {
             URL url = new URL(urlEntry);
 
+            //Establishes connection to link given
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             if(DEBUG)
             System.out.println("[Model] "+conn.getResponseCode());
 
+            //Prepares to pull information from website
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             final InputStream input = url.openStream();
@@ -115,11 +126,20 @@ public class Model {
         s.toFront();
     }
 
+    /**
+     * Removes podcast from the two main data list
+     * @param podcast the podcast to be removed
+     */
     public void deletePodcast(Podcast podcast){
         this.queueList.remove(podcast);
         this.podcastList.remove(podcast);
     }
 
+    /*
+
+            GETTERS & SETTERS
+
+     */
     public Controller getMainWindow() { return mainWindow; }
 
     public void setMainWindow(Controller mainWindow) { this.mainWindow = mainWindow; }
@@ -145,10 +165,6 @@ public class Model {
     }
 
     public NotesViewController getNotesViewController() { return this.notesViewController; }
-
-    public void setPopupWindow(PopupController pu) { this.popupWindow = pu; }
-
-    public PopupController getPopupWindow() { return this.popupWindow; }
 
     public HashMap<String, NodeList> getMostRecentRSSData() {
         return mostRecentRSSData;

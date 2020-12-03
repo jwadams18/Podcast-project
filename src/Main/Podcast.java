@@ -14,7 +14,11 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+/**
+ * @author jwadams18
+ * NoteCast! - PodcastPlayer
+ * CS*350 Human Computer Interaction
+ */
 public class Podcast {
 
     private final StringProperty author = new SimpleStringProperty(this, "author", "");
@@ -27,6 +31,15 @@ public class Podcast {
     private ProgressBar cellProgressBar;
     private String imgPath, enclosurePath, duration, pubDate, notesStr;
 
+    /**
+     * Data structure that will store all the infor pulled from RSS/downloaded
+     * @param Title
+     * @param Author
+     * @param imgPath
+     * @param enclosure link to the mp3 file for this podcast
+     * @param duration
+     * @param pubDate
+     */
     public Podcast(String Title, String Author, String imgPath, Node enclosure, String duration, String pubDate){
 
         this.title.set(Title);
@@ -44,6 +57,9 @@ public class Podcast {
         download();
     }
 
+    /**
+     * Downloads the mp3 for the podcast using the enclosure link pulled from RSS feed
+     */
     public void download() {
 
         if(Main.model.DEBUG)
@@ -55,6 +71,7 @@ public class Podcast {
         if(!new File("Podcast/").exists()){
             new File("Podcast/").mkdir();
         }
+        //Catches if the podcast has already been downloaded
         if(this.mediaFile.exists()){
             System.err.println("[Podcast] Podcast already downloaded! Skipping...");
             return;
@@ -106,6 +123,12 @@ public class Podcast {
 
 
     }
+
+    /*
+
+              GETTERS, SETTERS, BASIC HELPER FUNCTIONS
+
+     */
 
     public void deleteMP3(){
         this.mediaFile.delete();
