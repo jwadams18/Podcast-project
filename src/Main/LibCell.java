@@ -65,6 +65,7 @@ public class LibCell extends ListCell<Podcast> {
             e.printStackTrace();
         }
 
+        //Sets the action listeners
         queueBtn.setOnAction(this::queuePodcast);
         removeBtn.setOnAction(this::removeAction);
         viewNotes.setOnAction(this::viewNotes);
@@ -79,9 +80,10 @@ public class LibCell extends ListCell<Podcast> {
         this.podcast = podcast;
 
         final ChangeListener<Boolean> changeListener =(observableValue, oldValue, newValue) -> {
+            if(model.DEBUG)
             System.out.println("["+getClass().getName()+"] The observableValue has " + "changed: oldValue = " + oldValue + ", newValue = " + newValue);
         };
-
+        //if empty || null hides the libcell components
         if (empty || podcast == null) {
             podCastTitle.setVisible(false);
             podcastDuration.setVisible(false);
@@ -91,6 +93,12 @@ public class LibCell extends ListCell<Podcast> {
             temp.setPrefHeight(55.0);
             setGraphic(temp);
         } else {
+
+            if(!this.podcast.isDownloaded()){
+                queueBtn.setText("Download & Queue");
+                queueBtn.setWrapText(true);
+            }
+
             podCastTitle.setVisible(true);
             podCastTitle.setText(podcast.getTitle());
             podcastCover.setImage(new Image(podcast.getImgPath()));
@@ -122,10 +130,17 @@ public class LibCell extends ListCell<Podcast> {
 
     }
 
+    /**
+     * Will enqueue the podcast from Library
+     * @param event
+     */
     @FXML
     void queuePodcast(ActionEvent event) {
-        //TODO hover green
         ObservableList<Podcast> queueList = model.getQueueList();
+
+        if(!this.podcast.isDownloaded()){
+            this.podcast.download();
+        }
 
         if(!queueList.contains(podcast)){
             queueList.add(podcast);
@@ -134,6 +149,10 @@ public class LibCell extends ListCell<Podcast> {
         }
     }
 
+    /**
+     * Based on the current properties of the podcast will display a context menu with viable options
+     * @param event
+     */
     @FXML
     void removeAction(ActionEvent event) {
 
@@ -168,7 +187,10 @@ public class LibCell extends ListCell<Podcast> {
         }
     }
 
-
+    /**
+     * Opens new window to view the notes of the Libcell's podcast
+     * @param event
+     */
     @FXML
     void viewNotes(ActionEvent event) {
         Parent root;
@@ -179,6 +201,7 @@ public class LibCell extends ListCell<Podcast> {
             Stage stage = new Stage();
             stage.setTitle(this.podcast.getTitle()+" notes");
             stage.setScene(new Scene(root));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("resources/musicnote.png")));
             stage.setResizable(false);
             stage.showAndWait();
         }
@@ -195,22 +218,81 @@ public class LibCell extends ListCell<Podcast> {
     void removeFromQueue(ActionEvent event){
         model.getQueueList().remove(podcast);
         podcast.setQueued(false);
+        podcast.togglePlaying();
         cm.hide();
     }
 
+    /**
+     * Prompts the user with a confirm dialog before deleting notes
+     * @param event
+     */
     void deleteNotes(ActionEvent event){
-        model.getPopupWindow().show(model.PODCAST_DELETE_NOTES, this.podcast);
         cm.hide();
+        Alert alert = new Alert(Alert.AlertType.NONE, "Delete notes for "+this.podcast.getTitle()+"?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        if(alert.getResult() == ButtonType.YES){
+            if(model.DEBUG)
+                System.err.println("[LibCell] Deleting "+this.podcast.getTitle()+"\'s notes");
+
+            this.podcast.setNotes(Main.model.DEFAULT_NOTES);
+        } else {
+            alert.hide();
+        }
+
     }
 
+    /**
+     * Prompts user before deleting the podcast associated with the libcell
+     * @param event
+     */
     void deletePodcast(ActionEvent event){
-        model.getPopupWindow().show(model.PODCAST_DELETE, this.podcast);
+        //removes context menu that was displaed
         cm.hide();
+        //Creates and shows a pop-up that will prompt user to decide what happens to podcast
+        Alert alert = new Alert(Alert.AlertType.NONE, "Delete "+this.podcast.getTitle()+"?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        //CASE: YES, deletes podcast
+        if(alert.getResult() == ButtonType.YES){
+            if(model.DEBUG)
+                System.err.println("[LibCell] Deleting "+this.podcast.getTitle());
+
+            Main.model.deletePodcast(this.podcast);
+            //CASE: NO, hides alert
+        } else {
+            alert.hide();
+        }
     }
 
+    /**
+     * Prompts user to confirm deletion the podcast's mp3 file
+     * @param event
+     */
     void deletePodcastMP3(ActionEvent event){
-        model.getPopupWindow().show(model.PODCAST_DELETE_MP3, this.podcast);
+        //removes the context menu that was displayed
         cm.hide();
+        //Creates and shows a pop-up box that will prompt the user to decide what happens to the mp3 file
+        Alert alert = new Alert(Alert.AlertType.NONE, "Delete the mp3 file for "+this.podcast.getTitle()+"?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        //CASE: YES, removes the podcast from queue since file is deleted and updates status
+        if(alert.getResult() == ButtonType.YES){
+            if(model.DEBUG)
+                System.err.println("[LibCell] Deleting "+this.podcast.getTitle()+"\'s mp3 file");
+
+            this.podcast.deleteMP3();
+            this.podcast.setQueued(false);
+            model.getQueueList().remove(this.podcast);
+
+            if(this.podcast.isQueued()){
+                model.getQueueList().remove(this.podcast);
+                model.getMainWindow().setSelection();
+            }
+            //CASE: NO, hides alert
+        } else {
+            alert.hide();
+        }
     }
 
 }
